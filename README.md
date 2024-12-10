@@ -31,9 +31,10 @@ Happy Building!
 
 Tom
 
-## Tines Resources
+## Tines Technical Resources
 
 - [How To Import a Tines Story](https://www.tines.com/docs/stories/importing-and-exporting/)
+- [How To Create a Tines Resource](https://www.tines.com/docs/resources/#creating-a-resource)
 - [Tines Documentation](https://www.tines.com/docs/quickstart/)
 - [Tines Tutorials](https://www.tines.com/customer-center/#tutorials)
 - [Tines Customer Center](https://www.tines.com/customer-center/)
