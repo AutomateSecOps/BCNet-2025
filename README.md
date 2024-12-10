@@ -5,15 +5,17 @@ Instructions and workflows for the BCNet Tines Technical Workshop
 
 By the end of the workshop, you will know:
 
-1. How to create a basic csv report and email it using the Tines email action.
+1. How to query the [Star Wars API](https://swapi.dev/) and transform data to create a csv report.
 2. How to paginate to collect all the results in an HTTP Request action.
 3. How to create a Tines webform to submit Indicators of Compromise for enrichment.
 
 **There is no prior technical or cybersecurity experience needed.**  
 
-We will co-build throughout the entire workshop, so you will understand how to construct a Tines workflow from start to finish, using different actions such as the Event Transformation and Trigger actions. 
+This workshop is not a lecture. 
 
-In addition, we learn how to leverage Tines AI Automatic Mode for Event Transformations and the AI action.
+We will co-build throughout the entire workshop, so you will understand how to construct a Tines workflow from start to finish, using different actions such as the Event Transformation, the Send Email, and Trigger action. 
+
+In addition, you will learn how to leverage Tines AI Automatic Mode for Event Transformations and the Tines AI action.
 
 ## Requirements
 - Sign up for the [FREE Tines Community Edition](https://www.tines.com/pricing/)
@@ -33,3 +35,4 @@ Tom
 - [Tines Tutorials](https://www.tines.com/customer-center/#tutorials)
 - [Tines Customer Center](https://www.tines.com/customer-center/)
 - [Tines University](https://www.tines.com/university/)
+- [Tines & AI](https://www.tines.com/product/ai/)
