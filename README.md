@@ -6,7 +6,7 @@ Instructions and workflows for the BCNet Tines Technical Workshop
 By the end of the workshop, you will know:
 
 1. How to query the [Star Wars API](https://swapi.dev/) and transform data to create a csv report.
-2. How to paginate to collect all the results in an HTTP Request action.
+2. How to paginate amd collect all the results in an HTTP Request action.
 3. How to create a Tines webform to submit Indicators of Compromise for enrichment.
 
 **There is no prior technical or cybersecurity experience needed.**  
