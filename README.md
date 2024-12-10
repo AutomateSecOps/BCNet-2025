@@ -13,7 +13,7 @@ By the end of the workshop, you will know:
 
 This workshop is not a lecture. 
 
-It is hands-on keyboard!
+It is hands-on keyboard, so bring your laptop!
 
 We will co-build throughout the entire workshop, so you will understand how to construct a Tines workflow from start to finish, using different actions such as the Event Transformation, the Send Email, and Trigger action. 
 
