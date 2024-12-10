@@ -33,6 +33,7 @@ Tom
 
 ## Tines Resources
 
+- [How To Import a Tines Story](https://www.tines.com/docs/stories/importing-and-exporting/)
 - [Tines Documentation](https://www.tines.com/docs/quickstart/)
 - [Tines Tutorials](https://www.tines.com/customer-center/#tutorials)
 - [Tines Customer Center](https://www.tines.com/customer-center/)
