@@ -9,7 +9,7 @@ By the end of the workshop, you will know:
 2. How to paginate and collect all the results in an HTTP Request action.
 3. How to create a Tines webform to submit Indicators of Compromise for enrichment.
 
-**There is no prior technical or cybersecurity experience needed.**  
+**There is no prior technical, cybersecurity, or automation experience needed.**  
 
 This workshop is not a lecture. 
 
@@ -21,6 +21,7 @@ In addition, you will learn how to leverage Tines AI Automatic Mode for Event Tr
 
 ## Requirements
 - Sign up for the [FREE Tines Community Edition](https://www.tines.com/pricing/)
+- Sign up for a free personal VirusTotal or URLScan.io API key.
 - Once signed into your Tines tenant, download and import the two Tines Stories under the [tines](tines) folder in this GitHub repo.
 
 That's it.
