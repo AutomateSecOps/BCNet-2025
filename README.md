@@ -5,7 +5,7 @@ I will lead a technical workshop at [BCNet Connect 2025](https://www.bc.net/conn
 
 By the end of the workshop, you will know:
 
-1. How to query the [Star Wars API](https://swapi.dev/) and transform data to create a csv report.
+1. How to query the [Star Wars API](https://swapi.tech/) and transform data to create a csv report.
 2. How to paginate and collect all the results in an HTTP Request action.
 3. How to create a Tines webform to submit Indicators of Compromise for enrichment.
 
@@ -21,7 +21,7 @@ In addition, you will learn how to leverage Tines AI Automatic Mode for Event Tr
 
 ## Requirements
 - Sign up for the [FREE Tines Community Edition](https://www.tines.com/pricing/)
-- Sign up for a free personal VirusTotal or URLScan.io API key.
+- Sign up for a free personal [VirusTotal](https://www.virustotal.com/) or [URLScan.io](https://urlscan.io/) API key.
 - Once signed into your Tines tenant, download and import the two Tines Stories under the [tines](tines) folder in this GitHub repo.
 
 That's it.
