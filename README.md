@@ -21,7 +21,7 @@ In addition, you will learn how to leverage Tines AI Automatic Mode for Event Tr
 
 ## Requirements
 - Sign up for the [FREE Tines Community Edition](https://www.tines.com/pricing/)
-- Sign up for a free personal [VirusTotal](https://www.virustotal.com/) or [URLScan.io](https://urlscan.io/) API key.
+- Sign up for a free personal [VirusTotal](https://www.virustotal.com/) or [URLScan.io](https://urlscan.io/) API key
 - Once signed into your Tines tenant, download and import the two Tines Stories under the [tines](tines) folder in this GitHub repo.
 
 That's it.
