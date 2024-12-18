@@ -1,0 +1,410 @@
+{
+  "schema_version": 25,
+  "standard_lib_version": 66,
+  "action_runtime_version": 18,
+  "name": "Star Wars - Episode IV - A New Hope for Automation",
+  "description": null,
+  "guid": "1d63fb5b5bd3a406bde94eaabb323c3a",
+  "slug": "star_wars_episode_iv_a_new_hope_for_automation",
+  "agents": [
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Star Wars Ships",
+      "disabled": false,
+      "description": null,
+      "guid": "ae85205e562b3d85a98a37da65a8f92d",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "url": "https://swapi.tech/api/starships/",
+        "content_type": "application_json",
+        "method": "get"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Ship Array",
+      "disabled": false,
+      "description": null,
+      "guid": "037f555407b9e7ef6f54c333ecd51fa8",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "array": "=star_wars_ships.body.results"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::TriggerAgent",
+      "name": "More Results?",
+      "disabled": false,
+      "description": null,
+      "guid": "f4681d9d07632e34040c6f69071633c5",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "rules": [
+          {
+            "path": "<<star_wars_ships.body.next>>",
+            "type": "field!=value",
+            "value": ""
+          }
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Star Wars Ships",
+      "disabled": false,
+      "description": null,
+      "guid": "e1136a5ff7f0f471aabc0dafc3b5361a",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "url": "<<star_wars_ships.body.next>>",
+        "content_type": "application_json",
+        "method": "get"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Ship Array",
+      "disabled": false,
+      "description": null,
+      "guid": "8850bc0bf8a0fdead97d5da8bd6043ba",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "array": "=CONCAT(star_wars_ships.body.results, ship_array.array)"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Ship Objects to CSV",
+      "disabled": false,
+      "description": null,
+      "guid": "d9e6b2263350483b0762ac41b3299b4e",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "message": "=OBJECTS_TO_CSV(ship_array.array)"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EmailAgent",
+      "name": "Send Email Action",
+      "disabled": false,
+      "description": null,
+      "guid": "b2ed1ab835bb9215d6f0aefcfd3476e9",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "recipients": "thomasedwardpower@gmail.com",
+        "reply_to": "thomasedwardpower@gmail.com",
+        "sender_name": "Tom Power",
+        "subject": "Star Wars Starships",
+        "body": "A real email body could go here",
+        "advanced_html": true,
+        "attachments": [
+          {
+            "filename": "<<DATE('now', \"%Y-%m-%d\")>>_StarWars_Ships.csv",
+            "base64encodedcontents": "<<BASE64_ENCODE(ship_objects_to_csv.message)>>",
+            "content_type": "auto"
+          }
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Star Wars API",
+      "disabled": false,
+      "description": null,
+      "guid": "46e4b646ecba71fd5edc1fdde184b9b1",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "url": "https://swapi.tech/api/",
+        "content_type": "application_json",
+        "method": "get"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Delay 2 Seconds",
+      "disabled": false,
+      "description": null,
+      "guid": "f7e30896568a49cb4e5afc6c7f8a8afd",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "delay",
+        "seconds": "2"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null
+    }
+  ],
+  "diagram_notes": [
+    {
+      "content": "# Pagination Loop - provides the means to collect all the results from an API endpoint.\n*Example: [Link](https://www.tines.com/story-library/91375/implement-pagination-with-these-three-techniques)*\n",
+      "position": [
+        45,
+        120
+      ],
+      "guid": "331082b0c9a34f98eebbb40b03b51c70",
+      "width": 180
+    },
+    {
+      "content": "## Make sure to set the value to formula",
+      "position": [
+        255,
+        180
+      ],
+      "guid": "ca7ceaeb5a772558eb78fdb1bcef9ab7",
+      "width": 180
+    },
+    {
+      "content": "# Exercise 2 - Choose another Star Wars endpoint to create a pagination loop workflow",
+      "position": [
+        -30,
+        705
+      ],
+      "guid": "170685017a8701094c25d931ff36880b",
+      "width": 270
+    },
+    {
+      "content": "#  Start Here!",
+      "position": [
+        255,
+        -45
+      ],
+      "guid": "3587fb55ff4d1b030d6a3af8a14c3b11",
+      "width": 180
+    },
+    {
+      "content": "# https://th.bing.com/th?id=OIP.NXsMkejiyMC2ZbEpKxeuPgHaEe&w=321&h=194&c=8&rs=1&qlt=90&o=6&dpr=2&pid=3.1&rm=2",
+      "position": [
+        -360,
+        -405
+      ],
+      "guid": "66e7bfd738fc3e9cded7c56b0ff5a5b2",
+      "width": 282
+    },
+    {
+      "content": "# Goals\n- Learn how to use the Tines Story Building interface.\n- Learn about Tines Actions.\n- Learn to construct a pagination loop to collect all the results of an HTTP request.\n- Learn how to create a csv report that is emailed.\n- Learn the Tines ways of the **Force!**",
+      "position": [
+        -360,
+        -195
+      ],
+      "guid": "2d960d40a71b110fdae337eab057592d",
+      "width": 281
+    },
+    {
+      "content": "This Trigger was a bit tricky to figure out. \n ****A not equal to a null value.****",
+      "position": [
+        255,
+        255
+      ],
+      "guid": "4c516d689f22f34233bcb467a415e0a9",
+      "width": 180
+    },
+    {
+      "content": "****No Match - Dotted Line****",
+      "position": [
+        690,
+        270
+      ],
+      "guid": "39929c492cd9a88c358171dc593b622e",
+      "width": 180
+    },
+    {
+      "content": "# [Star Wars API - SWAPI Documentation](https://swapi.tech/documentation)\n",
+      "position": [
+        -360,
+        15
+      ],
+      "guid": "73b4ef3f94033558e1ee9cdc5bdc9397",
+      "width": 180
+    },
+    {
+      "content": "# [Tines Concat Function](https://www.tines.com/docs/formulas/functions/concat/)\n\n# [Tines Objects to CSV Function](https://www.tines.com/docs/formulas/functions/objects-to-csv/)",
+      "position": [
+        -375,
+        120
+      ],
+      "guid": "62e6acb8d9e22765b898815922b5d07c",
+      "width": 270
+    }
+  ],
+  "links": [],
+  "diagram_layout": "{\"ae85205e562b3d85a98a37da65a8f92d\":[495,120],\"037f555407b9e7ef6f54c333ecd51fa8\":[495,195],\"f4681d9d07632e34040c6f69071633c5\":[495,270],\"e1136a5ff7f0f471aabc0dafc3b5361a\":[495,405],\"8850bc0bf8a0fdead97d5da8bd6043ba\":[495,465],\"d9e6b2263350483b0762ac41b3299b4e\":[705,360],\"b2ed1ab835bb9215d6f0aefcfd3476e9\":[705,435],\"46e4b646ecba71fd5edc1fdde184b9b1\":[255,15],\"f7e30896568a49cb4e5afc6c7f8a8afd\":[495,345]}",
+  "send_to_story_enabled": false,
+  "entry_agent_guid": null,
+  "exit_agent_guids": [],
+  "exit_agent_guid": null,
+  "api_entry_action_guids": [],
+  "api_exit_action_guids": [],
+  "keep_events_for": 86400,
+  "reporting_status": true,
+  "send_to_story_access": null,
+  "story_library_metadata": {},
+  "parent_only_send_to_story": false,
+  "monitor_failures": false,
+  "send_to_stories": [],
+  "synchronous_webhooks_enabled": false,
+  "send_to_story_access_source": 0,
+  "send_to_story_skill_use_requires_confirmation": true,
+  "pages": [],
+  "tags": [],
+  "time_saved_unit": "minutes",
+  "time_saved_value": 0,
+  "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:1d63fb5b5bd3a406bde94eaabb323c3a",
+  "integration_product": null,
+  "integration_vendor": null,
+  "llm_product_instructions": "",
+  "exported_at": "2024-12-18T23:00:25Z",
+  "icon": ":first_place_medal:",
+  "integrations": []
+}
