@@ -2,10 +2,10 @@
   "schema_version": 25,
   "standard_lib_version": 66,
   "action_runtime_version": 18,
-  "name": "Star Wars - Episode IV - A New Hope for Automation",
+  "name": "Episode IV - A New Hope for Automation",
   "description": null,
   "guid": "1d63fb5b5bd3a406bde94eaabb323c3a",
-  "slug": "star_wars_episode_iv_a_new_hope_for_automation",
+  "slug": "episode_iv_a_new_hope_for_automation",
   "agents": [
     {
       "type": "Agents::HTTPRequestAgent",
@@ -342,7 +342,7 @@
       "width": 281
     },
     {
-      "content": "This Trigger was a bit tricky to figure out. \n ****A not equal to a null value.****",
+      "content": "This Trigger action was a bit tricky to figure out. \n ****A not equal to a null value.****",
       "position": [
         255,
         255
@@ -404,7 +404,7 @@
   "integration_product": null,
   "integration_vendor": null,
   "llm_product_instructions": "",
-  "exported_at": "2024-12-18T23:00:25Z",
+  "exported_at": "2024-12-19T20:56:42Z",
   "icon": ":first_place_medal:",
   "integrations": []
 }
