@@ -39,7 +39,3 @@ Tom
 - [Tines Customer Center](https://www.tines.com/customer-center/)
 - [Tines University](https://www.tines.com/university/)
 - [Tines & AI](https://www.tines.com/product/ai/)
-- [Tines WHERE Function](https://www.tines.com/docs/formulas/functions/where/)
-- [Tines FILTER Function](https://www.tines.com/docs/formulas/functions/filter/)
-- [Tines INCLUDES Function](https://www.tines.com/docs/formulas/functions/includes/)
-- [Tines LAMBDA Function](https://www.tines.com/docs/formulas/functions/lambda/)
