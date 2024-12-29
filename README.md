@@ -22,7 +22,7 @@ In addition, you will learn how to leverage Tines AI Automatic Mode for Event Tr
 ## Requirements
 - Sign up for the [FREE Tines Community Edition](https://www.tines.com/pricing/)
 - Sign up for a free personal [VirusTotal](https://www.virustotal.com/) and [URLScan.io](https://urlscan.io/) API key
-- Once signed into your Tines tenant, download and import the three Tines Stories under the tines folder in this GitHub repo.
+- Once signed into your Tines tenant, download and import the three Tines Stories under the [tines](https://github.com/AutomateSecOps/BCNet-2025/tree/main/tines) folder in this GitHub repo.
 
 Once you start automating, you can't stop!
 
