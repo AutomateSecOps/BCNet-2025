@@ -685,6 +685,35 @@
       },
       "width": null,
       "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Star Wars API-Search",
+      "disabled": false,
+      "description": null,
+      "guid": "288852359cdd1eac6ad5429623753d70",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "url": "https://swapi.dev/api/people/?search=darth",
+        "content_type": "application_json",
+        "method": "get"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
     }
   ],
   "diagram_notes": [
@@ -700,8 +729,8 @@
     {
       "content": "Helpful Regex for checking the validity of domain, ipv4, and sha256 IOCs",
       "position": [
-        -105,
-        420
+        -120,
+        390
       ],
       "guid": "573f7bd7eb5ca56ea909e82964581f11",
       "width": 270
@@ -718,8 +747,8 @@
     {
       "content": "# AI LLM To Analyze Alerts to determine which need follow up",
       "position": [
-        -120,
-        555
+        -360,
+        615
       ],
       "guid": "499ed41a5c3f64542d45be1953cf3b5b",
       "width": 270
@@ -727,20 +756,20 @@
     {
       "content": "# Requirements\n-  Sign up for a free personal API key at VirusTotal and URLScan.io.\n ",
       "position": [
-        -105,
-        315
+        -120,
+        285
       ],
       "guid": "16ba3386ee75f544768e2d8ccbfcc281",
       "width": 270
     },
     {
-      "content": "# [Download IOCs CSV from my GitHub repo](https://github.com/AutomateSecOps/BCNet-2025/tree/main/iocs)\n# [Tines Date Function](https://www.tines.com/docs/formulas/functions/date/)\n\n# [Tines Map Function](https://www.tines.com/docs/formulas/functions/map/)\n\n# [Tines CSV Parse To Objects Function](https://www.tines.com/docs/formulas/functions/csv-parse-to-objects/)\n\n# [Tines Base64_Decode Function](https://www.tines.com/docs/formulas/functions/base64-decode/)\n\n# [Tines Automatic Mode](https://www.tines.com/docs/actions/types/event-transformation/automatic/#example-configuration-options)\n\n# [Tips for Automatic Mode](https://explained.tines.com/en/articles/9369122-tips-for-automatic-mode)\n\n# [Troubleshooting Tips in Pages & HTTP Request action](https://explained.tines.com/en/articles/9889226-example-approach-story-troubleshooting)",
+      "content": "# Technical Resources\n- [Download IOCs CSV from my GitHub repo](https://github.com/AutomateSecOps/BCNet-2025/tree/main/iocs)\n- [Tines Date Function](https://www.tines.com/docs/formulas/functions/date/)\n\n- [Tines Map Function](https://www.tines.com/docs/formulas/functions/map/)\n\n- [Tines CSV Parse To Objects Function](https://www.tines.com/docs/formulas/functions/csv-parse-to-objects/)\n\n- [Tines Base64_Decode Function](https://www.tines.com/docs/formulas/functions/base64-decode/)\n\n- [Tines Automatic Mode](https://www.tines.com/docs/actions/types/event-transformation/automatic/#example-configuration-options)\n\n- [Tips for Automatic Mode](https://explained.tines.com/en/articles/9369122-tips-for-automatic-mode)\n\n- [Troubleshooting Tips in Pages & HTTP Request action](https://explained.tines.com/en/articles/9889226-example-approach-story-troubleshooting)",
       "position": [
         -120,
         45
       ],
       "guid": "ff3518e490cb368a34d930e407c86c59",
-      "width": 294
+      "width": 270
     },
     {
       "content": "# *Templates*",
@@ -758,7 +787,7 @@
       "receiver": 16
     }
   ],
-  "diagram_layout": "{\"020d4b8cceed45713c205da9feac1783\":[360,75],\"5e23b9d6a3c747bc9d4c2bc2f5708f58\":[360,420],\"5a05cbd7cb273afe524e4e01f451757e\":[210,510],\"78ea80d7152301db4379ae88c66eca0f\":[495,510],\"58d6b736851c40f4c8736554728ea13f\":[-105,495],\"f87763ac857e0e2454d003f167f7860b\":[210,570],\"1348fa66f3dfa0892fc26529496c8cc3\":[330,750],\"47f3100b599674fd12cfdefc2ee565ee\":[330,825],\"15a1d0ea2f79420206e077792b20abe7\":[330,675],\"67c0a7cbfc4e778893e820c1c5afbd0f\":[495,570],\"2d2f84216c8585dc7f300abce91d316f\":[240,990],\"d337a029d8d8723a2fa5444077bb5cee\":[240,930],\"e37b6dba48b4a84a48a98910aa626953\":[15,825],\"71c3bd8ea360570deeaf210943d774a9\":[-360,480],\"d385158d27cb5ba5f24c2e8d820b286a\":[660,345],\"026d8b43b5207906f3e053581b135776\":[600,825],\"06ff909fcef677e3e7731d8815f8920c\":[-120,705],\"cb00f78a3a194c50a88770ae8fbeaded\":[-120,645],\"e3a8311c24c4a937b9be0bd0357f370d\":[-360,540]}",
+  "diagram_layout": "{\"020d4b8cceed45713c205da9feac1783\":[345,-195],\"5e23b9d6a3c747bc9d4c2bc2f5708f58\":[345,150],\"5a05cbd7cb273afe524e4e01f451757e\":[225,240],\"78ea80d7152301db4379ae88c66eca0f\":[510,240],\"58d6b736851c40f4c8736554728ea13f\":[-120,465],\"f87763ac857e0e2454d003f167f7860b\":[225,300],\"1348fa66f3dfa0892fc26529496c8cc3\":[345,480],\"47f3100b599674fd12cfdefc2ee565ee\":[345,555],\"15a1d0ea2f79420206e077792b20abe7\":[345,405],\"67c0a7cbfc4e778893e820c1c5afbd0f\":[510,300],\"2d2f84216c8585dc7f300abce91d316f\":[345,720],\"d337a029d8d8723a2fa5444077bb5cee\":[345,660],\"e37b6dba48b4a84a48a98910aa626953\":[135,555],\"71c3bd8ea360570deeaf210943d774a9\":[-360,480],\"d385158d27cb5ba5f24c2e8d820b286a\":[675,75],\"026d8b43b5207906f3e053581b135776\":[510,555],\"06ff909fcef677e3e7731d8815f8920c\":[-360,765],\"cb00f78a3a194c50a88770ae8fbeaded\":[-360,705],\"e3a8311c24c4a937b9be0bd0357f370d\":[-360,540],\"288852359cdd1eac6ad5429623753d70\":[-120,525]}",
   "send_to_story_enabled": false,
   "entry_agent_guid": null,
   "exit_agent_guids": [],
@@ -1055,7 +1084,7 @@
   "integration_product": null,
   "integration_vendor": null,
   "llm_product_instructions": "",
-  "exported_at": "2024-12-29T14:45:06Z",
+  "exported_at": "2024-12-29T15:33:35Z",
   "icon": ":hammer_and_pick:",
   "integrations": [
     {

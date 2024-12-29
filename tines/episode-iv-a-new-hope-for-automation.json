@@ -1,10 +1,10 @@
 {
-  "schema_version": 25,
+  "schema_version": 26,
   "standard_lib_version": 66,
   "action_runtime_version": 18,
   "name": "Episode IV - A New Hope for Automation",
   "description": null,
-  "guid": "1d63fb5b5bd3a406bde94eaabb323c3a",
+  "guid": "72e7a5fc112670fa24d84ded90f8768c",
   "slug": "episode_iv_a_new_hope_for_automation",
   "agents": [
     {
@@ -12,7 +12,7 @@
       "name": "Star Wars Ships",
       "disabled": false,
       "description": null,
-      "guid": "ae85205e562b3d85a98a37da65a8f92d",
+      "guid": "c965696173aa539df41ce5c95f7c4fea",
       "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
       "options": {
         "url": "https://swapi.tech/api/starships/",
@@ -41,7 +41,7 @@
       "name": "Ship Array",
       "disabled": false,
       "description": null,
-      "guid": "037f555407b9e7ef6f54c333ecd51fa8",
+      "guid": "11eb68f480f69af56ee2a12187af30a3",
       "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
       "options": {
         "mode": "message_only",
@@ -72,7 +72,7 @@
       "name": "More Results?",
       "disabled": false,
       "description": null,
-      "guid": "f4681d9d07632e34040c6f69071633c5",
+      "guid": "c86d527e2501c0e0f6a08f43fd63b1f9",
       "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
       "options": {
         "rules": [
@@ -104,7 +104,7 @@
       "name": "Star Wars Ships",
       "disabled": false,
       "description": null,
-      "guid": "e1136a5ff7f0f471aabc0dafc3b5361a",
+      "guid": "f479a447e1baca9e73acc05459fdf106",
       "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
       "options": {
         "url": "<<star_wars_ships.body.next>>",
@@ -133,7 +133,7 @@
       "name": "Ship Array",
       "disabled": false,
       "description": null,
-      "guid": "8850bc0bf8a0fdead97d5da8bd6043ba",
+      "guid": "23df9399ebb7dbbb20b42659e9cff453",
       "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
       "options": {
         "mode": "message_only",
@@ -164,7 +164,7 @@
       "name": "Ship Objects to CSV",
       "disabled": false,
       "description": null,
-      "guid": "d9e6b2263350483b0762ac41b3299b4e",
+      "guid": "a0768790a6cecd1f9eb03f06deedf77b",
       "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
       "options": {
         "mode": "message_only",
@@ -195,7 +195,7 @@
       "name": "Send Email Action",
       "disabled": false,
       "description": null,
-      "guid": "b2ed1ab835bb9215d6f0aefcfd3476e9",
+      "guid": "ff474fde1da26461cfc544cd9446230d",
       "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
       "options": {
         "recipients": "thomasedwardpower@gmail.com",
@@ -234,7 +234,7 @@
       "name": "Star Wars API",
       "disabled": false,
       "description": null,
-      "guid": "46e4b646ecba71fd5edc1fdde184b9b1",
+      "guid": "4ef039a118d31dea7156af310c558c1b",
       "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
       "options": {
         "url": "https://swapi.tech/api/",
@@ -263,7 +263,7 @@
       "name": "Delay 2 Seconds",
       "disabled": false,
       "description": null,
-      "guid": "f7e30896568a49cb4e5afc6c7f8a8afd",
+      "guid": "f4aedf4a4aac2d3fc7f3f559531b75d5",
       "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
       "options": {
         "mode": "delay",
@@ -288,10 +288,10 @@
   ],
   "diagram_notes": [
     {
-      "content": "# Pagination Loop - provides the means to collect all the results from an API endpoint.\n*Example: [Link](https://www.tines.com/story-library/91375/implement-pagination-with-these-three-techniques)*\n",
+      "content": "# Pagination Loop - provides the means to collect all the results from an API endpoint.\n## - [Example](https://www.tines.com/story-library/91375/implement-pagination-with-these-three-techniques)",
       "position": [
-        45,
-        120
+        -360,
+        285
       ],
       "guid": "331082b0c9a34f98eebbb40b03b51c70",
       "width": 180
@@ -299,8 +299,8 @@
     {
       "content": "## Make sure to set the value to formula",
       "position": [
-        255,
-        180
+        45,
+        -150
       ],
       "guid": "ca7ceaeb5a772558eb78fdb1bcef9ab7",
       "width": 180
@@ -317,8 +317,8 @@
     {
       "content": "#  Start Here!",
       "position": [
-        255,
-        -45
+        45,
+        -375
       ],
       "guid": "3587fb55ff4d1b030d6a3af8a14c3b11",
       "width": 180
@@ -333,10 +333,10 @@
       "width": 282
     },
     {
-      "content": "# Goals\n- Learn how to use the Tines Story Building interface.\n- Learn about Tines Actions.\n- Learn to construct a pagination loop to collect all the results of an HTTP request.\n- Learn how to create a csv report that is emailed.\n- Learn the Tines ways of the **Force!**",
+      "content": "# Goals\n- Learn how to use the Tines Story building user interface.\n- Learn about Tines Actions.\n- Learn about Tines Resources.\n- Learn to construct a pagination loop to collect all the results of an HTTP request.\n- Learn how to create a csv report that is emailed.\n- Learn the Tines Automation ways of the **Force!**",
       "position": [
         -360,
-        -195
+        -210
       ],
       "guid": "2d960d40a71b110fdae337eab057592d",
       "width": 281
@@ -344,8 +344,8 @@
     {
       "content": "This Trigger action was a bit tricky to figure out. \n ****A not equal to a null value.****",
       "position": [
-        255,
-        255
+        45,
+        -75
       ],
       "guid": "4c516d689f22f34233bcb467a415e0a9",
       "width": 180
@@ -353,37 +353,36 @@
     {
       "content": "****No Match - Dotted Line****",
       "position": [
-        690,
-        270
+        495,
+        -60
       ],
       "guid": "39929c492cd9a88c358171dc593b622e",
       "width": 180
     },
     {
-      "content": "# [Star Wars API - SWAPI Documentation](https://swapi.tech/documentation)\n",
+      "content": "# Tines Documentation\n- [Tines Actions](https://www.tines.com/docs/actions/)\n\n- [Tines Payload Values](https://explained.tines.com/en/articles/9014842-payloads-in-tines-explained)\n\n- [Tines Resources](https://www.tines.com/docs/resources/)\n\n- [Tines Concat Function](https://www.tines.com/docs/formulas/functions/concat/)\n\n- [Tines Objects to CSV Function](https://www.tines.com/docs/formulas/functions/objects-to-csv/)\n\n- [Tines Base64 Encode Function](https://www.tines.com/docs/formulas/functions/base64-encode/)",
       "position": [
         -360,
-        15
-      ],
-      "guid": "73b4ef3f94033558e1ee9cdc5bdc9397",
-      "width": 180
-    },
-    {
-      "content": "# [Tines Concat Function](https://www.tines.com/docs/formulas/functions/concat/)\n\n# [Tines Objects to CSV Function](https://www.tines.com/docs/formulas/functions/objects-to-csv/)",
-      "position": [
-        -375,
         120
       ],
       "guid": "62e6acb8d9e22765b898815922b5d07c",
       "width": 270
+    },
+    {
+      "content": "# Star Wars API \n- [SWAPI Documentation](https://swapi.tech/documentation)\n",
+      "position": [
+        -360,
+        30
+      ],
+      "guid": "9240df13c7030e593766a71c029ea048",
+      "width": 180
     }
   ],
   "links": [],
-  "diagram_layout": "{\"ae85205e562b3d85a98a37da65a8f92d\":[495,120],\"037f555407b9e7ef6f54c333ecd51fa8\":[495,195],\"f4681d9d07632e34040c6f69071633c5\":[495,270],\"e1136a5ff7f0f471aabc0dafc3b5361a\":[495,405],\"8850bc0bf8a0fdead97d5da8bd6043ba\":[495,465],\"d9e6b2263350483b0762ac41b3299b4e\":[705,360],\"b2ed1ab835bb9215d6f0aefcfd3476e9\":[705,435],\"46e4b646ecba71fd5edc1fdde184b9b1\":[255,15],\"f7e30896568a49cb4e5afc6c7f8a8afd\":[495,345]}",
+  "diagram_layout": "{\"c965696173aa539df41ce5c95f7c4fea\":[285,-210],\"11eb68f480f69af56ee2a12187af30a3\":[285,-135],\"c86d527e2501c0e0f6a08f43fd63b1f9\":[285,-60],\"f479a447e1baca9e73acc05459fdf106\":[285,75],\"23df9399ebb7dbbb20b42659e9cff453\":[285,135],\"a0768790a6cecd1f9eb03f06deedf77b\":[495,15],\"ff474fde1da26461cfc544cd9446230d\":[495,105],\"4ef039a118d31dea7156af310c558c1b\":[45,-315],\"f4aedf4a4aac2d3fc7f3f559531b75d5\":[285,15]}",
   "send_to_story_enabled": false,
   "entry_agent_guid": null,
   "exit_agent_guids": [],
-  "exit_agent_guid": null,
   "api_entry_action_guids": [],
   "api_exit_action_guids": [],
   "keep_events_for": 86400,
@@ -404,7 +403,7 @@
   "integration_product": null,
   "integration_vendor": null,
   "llm_product_instructions": "",
-  "exported_at": "2024-12-19T20:56:42Z",
+  "exported_at": "2024-12-29T15:33:40Z",
   "icon": ":first_place_medal:",
   "integrations": []
 }
