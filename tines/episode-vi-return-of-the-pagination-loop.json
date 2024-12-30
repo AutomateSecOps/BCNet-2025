@@ -1,0 +1,1773 @@
+{
+  "schema_version": 26,
+  "standard_lib_version": 66,
+  "action_runtime_version": 18,
+  "name": "Episode VI - Return of the Pagination Loop",
+  "description": null,
+  "guid": "efabe1c152f0445f920b8e6e3c3d0118",
+  "slug": "episode_vi_return_of_the_pagination_loop",
+  "agents": [
+    {
+      "type": "Agents::TriggerAgent",
+      "name": "Hyperdrive Rating 2.0 or Higher?",
+      "disabled": false,
+      "description": null,
+      "guid": "7ef0873c2f92bef35d21562934a91015",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "rules": [
+          {
+            "path": "=ship_url.body.result.properties.hyperdrive_rating",
+            "type": "field>=value",
+            "value": "2.0"
+          }
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Purge Star Wars Fast Ship Report",
+      "disabled": false,
+      "description": "Clear a resource value in Tines.\n\nLink to API documentation: https://www.tines.com/api/resources/update",
+      "guid": "7c19945ecb28ef533a5bc4667030019a",
+      "origin_story_identifier": "cloud:256caef50de818d681816208610a2c92:d8aa079f947e2159d27bd579e71d131d",
+      "options": {
+        "url": "https://<<INPUT.tenant_domain>>/api/v1/global_resources/<<INPUT.resource_id>>",
+        "method": "put",
+        "headers": {
+          "Authorization": "Bearer <<INPUT.tines_credential>>"
+        },
+        "content_type": "application_json",
+        "local": {
+          "all_parameters": {
+            "name": "=INPUT.resource_name",
+            "folder_id": "=INPUT.folder_id",
+            "read_access": "=DEFAULT(INPUT.read_access[0], \"TEAM\")",
+            "shared_team_slugs": "=IF(INPUT.read_access[0]= \"SPECIFIC_TEAMS\", SPLIT(DOWNCASE(REPLACE(INPUT.shared_team_names, \" \", \"_\")), \",\"), [])",
+            "description": "<<INPUT.description>>",
+            "test_resource_enabled": "=INPUT.test_resource_enabled",
+            "is_test": "=INPUT.is_test_resource"
+          },
+          "final_payload": "=REJECT(\n  LOCAL.all_parameters,\n  LAMBDA(\n    item,\n    OR(\n      item = NULL,\n      IF(\n        OR(\n          TYPE(item) = \"TrueClass\",\n          TYPE(item) = \"FalseClass\",\n          TYPE(item) = \"Integer\"\n        ),\n        IS_EMPTY(TEXT(item)),\n        IS_EMPTY(item)\n      )\n    )\n  )\n)",
+          "add_value_field": "=MERGE(LOCAL.final_payload, OBJECT(\"value\", INPUT.json_resource_value))"
+        },
+        "payload": "=LOCAL.add_value_field"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": "75cfb7a96df45614d8921490cb34c1fa3c51f0c3739b35438ba8f811623ca37e",
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Filter cost unknown using the FILTER & INCLUDES function",
+      "disabled": false,
+      "description": null,
+      "guid": "0b0c7efdfd84d5e8e240e5f217feee80",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "fast_unknown": "=FILTER(ship_arrays.fast_array, LAMBDA(item, INCLUDES(item.cost, \"unknown\")))",
+          "slow_unknown": "="
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Create Ship Object",
+      "disabled": false,
+      "description": null,
+      "guid": "5dbbc9b92f84d598007b8606a870919a",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "ship_object": "=OBJECT(\"name\", ship_url.body.result.properties.name, \n\"model\", ship_url.body.result.properties.model, \n\"crew\", ship_url.body.result.properties.crew, \n\"cost\", ship_url.body.result.properties.cost_in_credits,\n\"hyperdrive_rating\", ship_url.body.result.properties.hyperdrive_rating)"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Append element to Fast Ship resource",
+      "disabled": false,
+      "description": "Append a string or an array to a resource. If the resource has a test value this can be modified by using the is_test parameter.\n\nLink to API documentation: https://www.tines.com/api/resources/append-element",
+      "guid": "8f89c6aefcaee28678d5225b12ea7c09",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "url": "https://<<INPUT.tenant_domain>>/api/v1/global_resources/<<INPUT.resource_id>>/append",
+        "method": "post",
+        "headers": {
+          "Authorization": "Bearer <<INPUT.tines_credential>>"
+        },
+        "content_type": "application_json",
+        "local": {
+          "all_parameters": {
+            "value": "=DEFAULT(INPUT.text_value, INPUT.array_value)",
+            "is_test": "=INPUT.is_test_resource"
+          },
+          "final_payload": "=REJECT(\n  LOCAL.all_parameters,\n  LAMBDA(\n    item,\n    OR(\n      item = NULL,\n      IF(\n        OR(\n          TYPE(item) = \"TrueClass\",\n          TYPE(item) = \"FalseClass\",\n          TYPE(item) = \"Integer\"\n        ),\n        IS_EMPTY(TEXT(item)),\n        IS_EMPTY(item)\n      )\n    )\n  )\n)"
+        },
+        "payload": "=LOCAL.final_payload"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": "b40e331f2e157852280d1116aff9f928555943a8fb098475fb5e987014e3e238",
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Ship Objects to CSV",
+      "disabled": false,
+      "description": null,
+      "guid": "2c425065af98b4e17c2e18a2b7374e57",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "fast": "=OBJECTS_TO_CSV(RESOURCE.fast_ship_report)",
+          "slow": "=OBJECTS_TO_CSV((RESOURCE.slow_ship_report))"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Implode Results",
+      "disabled": false,
+      "description": null,
+      "guid": "7a21c2e1877149f5968d71bcb1865e85",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "implode",
+        "item_path": "=explode_all_ships.ship",
+        "guid_path": "=explode_all_ships.guid",
+        "size_path": "=explode_all_ships.size"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EmailAgent",
+      "name": "Send Email Action",
+      "disabled": false,
+      "description": null,
+      "guid": "51195372891e979fc5e09950bca3c556",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "recipients": "thomasedwardpower@gmail.com",
+        "reply_to": "thomasedwardpower@gmail.com",
+        "sender_name": "Tom Power",
+        "subject": "Starship Reports",
+        "body": "Tines and the Star Wars API (SWAPI) generated these reports.<br>\n\n<<ai_fast_ship_summary.output>>\n<br>\n<br>\n<<ai_slow_ship_summary.output>>",
+        "advanced_html": true,
+        "attachments": [
+          {
+            "filename": "<<DATE(\"now\", \"%Y-%m-%d\")>>_Fast_Ship_Report.csv",
+            "base64encodedcontents": "<<BASE64_ENCODE(ship_objects_to_csv.fast)>>",
+            "content_type": "auto"
+          },
+          {
+            "filename": "<<DATE(\"now\", \"%Y-%m-%d\")>>_Slow_Ship_Report.csv",
+            "base64encodedcontents": "<<BASE64_ENCODE(ship_objects_to_csv.slow)>>",
+            "content_type": "auto"
+          }
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Purge Star Wars Slow Ship Report",
+      "disabled": false,
+      "description": "Clear a resource value in Tines.\n\nLink to API documentation: https://www.tines.com/api/resources/update",
+      "guid": "bd9173c186aa7f33d39a09782db679ec",
+      "origin_story_identifier": "cloud:256caef50de818d681816208610a2c92:d8aa079f947e2159d27bd579e71d131d",
+      "options": {
+        "url": "https://<<INPUT.tenant_domain>>/api/v1/global_resources/<<INPUT.resource_id>>",
+        "method": "put",
+        "headers": {
+          "Authorization": "Bearer <<INPUT.tines_credential>>"
+        },
+        "content_type": "application_json",
+        "local": {
+          "all_parameters": {
+            "name": "=INPUT.resource_name",
+            "folder_id": "=INPUT.folder_id",
+            "read_access": "=DEFAULT(INPUT.read_access[0], \"TEAM\")",
+            "shared_team_slugs": "=IF(INPUT.read_access[0]= \"SPECIFIC_TEAMS\", SPLIT(DOWNCASE(REPLACE(INPUT.shared_team_names, \" \", \"_\")), \",\"), [])",
+            "description": "<<INPUT.description>>",
+            "test_resource_enabled": "=INPUT.test_resource_enabled",
+            "is_test": "=INPUT.is_test_resource"
+          },
+          "final_payload": "=REJECT(\n  LOCAL.all_parameters,\n  LAMBDA(\n    item,\n    OR(\n      item = NULL,\n      IF(\n        OR(\n          TYPE(item) = \"TrueClass\",\n          TYPE(item) = \"FalseClass\",\n          TYPE(item) = \"Integer\"\n        ),\n        IS_EMPTY(TEXT(item)),\n        IS_EMPTY(item)\n      )\n    )\n  )\n)",
+          "add_value_field": "=MERGE(LOCAL.final_payload, OBJECT(\"value\", INPUT.json_resource_value))"
+        },
+        "payload": "=LOCAL.add_value_field"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": "75cfb7a96df45614d8921490cb34c1fa3c51f0c3739b35438ba8f811623ca37e",
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Explode All Ships",
+      "disabled": false,
+      "description": null,
+      "guid": "9ae52fc60a391f2a72a4bd9e74921b0a",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "explode",
+        "path": "=ship_array.array",
+        "to": "ship",
+        "limit": "5000"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Ship URL",
+      "disabled": false,
+      "description": null,
+      "guid": "b5365b5e476628e13bdade9c2ddbbbef",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:1d63fb5b5bd3a406bde94eaabb323c3a",
+      "options": {
+        "url": "<<explode_all_ships.ship.url>>",
+        "content_type": "application_json",
+        "method": "get"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Create Ship Object",
+      "disabled": false,
+      "description": null,
+      "guid": "f6c2286dd7bde0aa60c42f08d321b898",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "ship_object": "=OBJECT(\"name\", ship_url.body.result.properties.name, \n\"model\", ship_url.body.result.properties.model, \n\"crew\", ship_url.body.result.properties.crew, \n\"cost\", ship_url.body.result.properties.cost_in_credits,\n\"hyperdrive_rating\", ship_url.body.result.properties.hyperdrive_rating)"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Append element to a Slow Ship resource",
+      "disabled": false,
+      "description": "Append a string or an array to a resource. If the resource has a test value this can be modified by using the is_test parameter.\n\nLink to API documentation: https://www.tines.com/api/resources/append-element",
+      "guid": "1dd35f16acfa5aec0394c2f5733fc19c",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "url": "https://<<INPUT.tenant_domain>>/api/v1/global_resources/<<INPUT.resource_id>>/append",
+        "method": "post",
+        "headers": {
+          "Authorization": "Bearer <<INPUT.tines_credential>>"
+        },
+        "content_type": "application_json",
+        "local": {
+          "all_parameters": {
+            "value": "=DEFAULT(INPUT.text_value, INPUT.array_value)",
+            "is_test": "=INPUT.is_test_resource"
+          },
+          "final_payload": "=REJECT(\n  LOCAL.all_parameters,\n  LAMBDA(\n    item,\n    OR(\n      item = NULL,\n      IF(\n        OR(\n          TYPE(item) = \"TrueClass\",\n          TYPE(item) = \"FalseClass\",\n          TYPE(item) = \"Integer\"\n        ),\n        IS_EMPTY(TEXT(item)),\n        IS_EMPTY(item)\n      )\n    )\n  )\n)"
+        },
+        "payload": "=LOCAL.final_payload"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": "b40e331f2e157852280d1116aff9f928555943a8fb098475fb5e987014e3e238",
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Throttle",
+      "disabled": false,
+      "description": null,
+      "guid": "2c2a7e6e839f2341276a269f0f2f88b7",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "throttle",
+        "interval": "minute",
+        "capacity": "40",
+        "events_per_run": 1
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Ship Arrays",
+      "disabled": false,
+      "description": null,
+      "guid": "fba75f51ef39cc8a9c00631fd7478107",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "fast_array": "=RESOURCE.fast_ship_report",
+          "slow_array": "="
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Ship Unknown Costs In Credits using the WHERE Function",
+      "disabled": false,
+      "description": null,
+      "guid": "7b4c6fa4004b63bd45628c7191967b11",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "fast_unknown": "=WHERE(ship_arrays.fast_array, \"cost\", \"unknown\")",
+          "slow_unknown": "="
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Fast Ships - Cost Unknown - AI Automatic Mode",
+      "disabled": false,
+      "description": null,
+      "guid": "6029a619655e7aecbe704cc276fe82c8",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "automatic",
+        "input": "=ship_arrays.fast_array",
+        "guidance": "Find objects that have cost equal to unknown.",
+        "language": "Python",
+        "script": "from typing import List, Dict\n\ndef main(input: List[Dict[str, str]]) -> List[Dict[str, str]]:\n    result = []\n    for obj in input:\n        if obj.get('cost') == 'unknown':\n            result.append(obj)\n    return result"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Slow Ships - Cost Unknown - AI Automatic Mode",
+      "disabled": false,
+      "description": null,
+      "guid": "4c6648788dcbd9f73764d0d6fff30baa",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "automatic",
+        "input": "=ship_arrays.slow_array",
+        "guidance": "Output every object that has cost unknown value",
+        "language": "Python",
+        "script": "from typing import List, Dict\n\ndef main(input: List[Dict[str, str]]) -> List[Dict[str, str]]:\n    result = []\n    for ship in input:\n        if ship.get('cost') == 'unknown':\n            result.append(ship)\n    return result"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Hyperdrive Ratings using the FILTER & INCLUDES function",
+      "disabled": false,
+      "description": null,
+      "guid": "50f41891b84409dec4f67c7b59681f40",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "hyper_1": "=FILTER(ship_arrays.slow_array, LAMBDA(i, INCLUDES(i.hyperdrive_rating, \"1.0\")))",
+          "hyper_2": "="
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Filter hyperdrive ratings WHERE Function",
+      "disabled": false,
+      "description": null,
+      "guid": "8886016d9137a1aa2f52db6c781d4c8f",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "drive_1": "=WHERE(ship_arrays.slow_array, \"hyperdrive_rating\", \"1.0\")",
+          "drive_2": "="
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Slow Ships - Hyperdrive Rating 1.0 - AI Automatic Mode",
+      "disabled": false,
+      "description": null,
+      "guid": "43a7cb030b03b86787311ee13063e756",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "automatic",
+        "input": "=ship_arrays.slow_array",
+        "guidance": "Output every object that has a hyperdrive_rating of 1.0",
+        "language": "Python",
+        "script": "from typing import List, Dict\n\ndef main(input: List[Dict[str, str]]) -> List[Dict[str, str]]:\n    return [ship for ship in input if ship.get('hyperdrive_rating') == '1.0']"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "AI Fast Ship Summary",
+      "disabled": false,
+      "description": null,
+      "guid": "8ed05524e88d732f6fe54d980bb3851c",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "automatic",
+        "input": "=RESOURCE.fast_ship_report",
+        "guidance": "Write a summary of how many objects along with their hyperdrive_rating",
+        "language": "Python",
+        "script": "from typing import List, Dict\n\ndef main(input: List[Dict[str, str]]) -> Dict[str, int]:\n    hyperdrive_ratings = {}\n    for obj in input:\n        hyperdrive_rating = obj.get('hyperdrive_rating')\n        if hyperdrive_rating:\n            hyperdrive_ratings[hyperdrive_rating] = hyperdrive_ratings.get(hyperdrive_rating, 0) + 1\n    return hyperdrive_ratings"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "AI Slow Ship Summary",
+      "disabled": false,
+      "description": null,
+      "guid": "44a1f206a3198c4607656536ea1ccdb9",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "automatic",
+        "input": "=RESOURCE.slow_ship_report",
+        "guidance": "Write a summary of each object along with the hyperdrive_rating",
+        "language": "Python",
+        "script": "from typing import List, Dict\n\ndef main(input: List[Dict[str, str]]) -> List[Dict[str, str]]:\n    result = []\n    for obj in input:\n        name = obj.get('name')\n        model = obj.get('model')\n        hyperdrive_rating = obj.get('hyperdrive_rating')\n        summary = f\"The {name} is a {model} with a hyperdrive rating of {hyperdrive_rating}.\"\n        result.append({'summary': summary})\n    return result"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Star Wars Ships",
+      "disabled": false,
+      "description": null,
+      "guid": "cdefac148bde5bbe99a5efb51b1760f1",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "url": "https://swapi.tech/api/starships/",
+        "content_type": "application_json",
+        "method": "get"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Ship Array",
+      "disabled": false,
+      "description": null,
+      "guid": "2c20cf5c35929216aaab13bc539c4f3f",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "array": "=star_wars_ships.body.results"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::TriggerAgent",
+      "name": "More Results?",
+      "disabled": false,
+      "description": null,
+      "guid": "94cf3c8c306b741ac0cf9fbc97c2122d",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "rules": [
+          {
+            "path": "<<star_wars_ships.body.next>>",
+            "type": "field!=value",
+            "value": ""
+          }
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Star Wars Ships",
+      "disabled": false,
+      "description": null,
+      "guid": "564cad674a37efd1108b4d2cdee1b08c",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "url": "<<star_wars_ships.body.next>>",
+        "content_type": "application_json",
+        "method": "get"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Ship Array",
+      "disabled": false,
+      "description": null,
+      "guid": "7e38453f9bad664ffda90a17bcb30d79",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "array": "=CONCAT(star_wars_ships.body.results, ship_array.array)"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Ship Objects to CSV",
+      "disabled": true,
+      "description": null,
+      "guid": "2622dc32381e69886a7c946ac9c96537",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "message": "=OBJECTS_TO_CSV(ship_array.array)"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EmailAgent",
+      "name": "Send Email Action",
+      "disabled": false,
+      "description": null,
+      "guid": "89a43833bb4f245dd8536c23fa409964",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "recipients": "thomasedwardpower@gmail.com",
+        "reply_to": "thomasedwardpower@gmail.com",
+        "sender_name": "Tom Power",
+        "subject": "Star Wars Starships",
+        "body": "A real email body could go here",
+        "advanced_html": true,
+        "attachments": [
+          {
+            "filename": "<<DATE('now', \"%Y-%m-%d\")>>_StarWars_Ships.csv",
+            "base64encodedcontents": "<<BASE64_ENCODE(ship_objects_to_csv.message)>>",
+            "content_type": "auto"
+          }
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Delay 2 Seconds",
+      "disabled": false,
+      "description": null,
+      "guid": "e18c8453ac8db737b582ff9fa90e6ef0",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "delay",
+        "seconds": "2"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null
+    }
+  ],
+  "diagram_notes": [
+    {
+      "content": "# Exercise 1 - Choose another Star Wars API Endpoint to create a similar workflow or a workflow of your choice.  You can copy the workflow from the first training session, Episode IV.",
+      "position": [
+        165,
+        1020
+      ],
+      "guid": "a420b2f11f71c51a6000666a32f32484",
+      "width": 270
+    },
+    {
+      "content": "# Requirements\n-  Create a Tines Resouce called Fast_Ship_Results, Slow_Ship_Results,  and  two Stars Wars Ship file names.\n ",
+      "position": [
+        -255,
+        180
+      ],
+      "guid": "62d94f30d4fb3165511376cc762f6d16",
+      "width": 261
+    },
+    {
+      "content": "# Tines Documentation\n-  [Tines WHERE Function](https://www.tines.com/docs/formulas/functions/where/)\n- [Tines FILTER Function](https://www.tines.com/docs/formulas/functions/filter/)\n- [Tines INCLUDES Function](https://www.tines.com/docs/formulas/functions/includes/)\n- [Tines OBJECT function](https://www.tines.com/docs/formulas/functions/object/)\n- [Tines OBJECTS_TO_CSV Function](https://www.tines.com/docs/formulas/functions/objects-to-csv/)\n- [Tines CONCAT Function](https://www.tines.com/docs/formulas/functions/concat/)\n- [Tines DATE Function](https://www.tines.com/docs/formulas/functions/date/)\n- [Tines Resources](https://www.tines.com/docs/resources/)\n- [Tines Implode Mode](https://www.tines.com/docs/actions/types/event-transformation/implode/)",
+      "position": [
+        -255,
+        300
+      ],
+      "guid": "3ace86e4fcb144825a4ec39d807d4a92",
+      "width": 232
+    },
+    {
+      "content": "# https://th.bing.com/th?id=OIP.NXsMkejiyMC2ZbEpKxeuPgHaEe&w=321&h=194&c=8&rs=1&qlt=90&o=6&dpr=2&pid=3.1&rm=2",
+      "position": [
+        -255,
+        -255
+      ],
+      "guid": "c5dcd4d9d9c7b9490343396bc47a0ace",
+      "width": 282
+    },
+    {
+      "content": "# Goals\n- Learn how to use AI Automatic Mode for Event Transformations for filtering data.\n- Learn the WHERE, FILTER, and INCLUDES Tines Functions for filtering data.\n- Dive deeper into Tines Resources by writing to a Tines Resource.\n- Learn the Implode Mode for Event Transformation.\n- Learn how to create a csv report that contains filtered data using the OBJECT Function.",
+      "position": [
+        -255,
+        -45
+      ],
+      "guid": "84594fb585f7fe25aae2dc10418bc1e2",
+      "width": 317
+    },
+    {
+      "content": "These Tines action insert a blank array into the report resource so they can be reused in future reports.",
+      "position": [
+        420,
+        765
+      ],
+      "guid": "7b55ad5cab0b212411cd34d14370c0d3",
+      "width": 180
+    },
+    {
+      "content": "- Where function  & Filter Function vs. AI Automatic Mode\n- Advanced Mode for Troubleshooting",
+      "position": [
+        1245,
+        -255
+      ],
+      "guid": "2197d09c685c00580df622aa01eceed2",
+      "width": 270
+    },
+    {
+      "content": "# ****Start Here - 2****  Learning how to slice and dice  data with event transformations",
+      "position": [
+        1245,
+        -360
+      ],
+      "guid": "6aa2584910b292bc1d9bb596df584f30",
+      "width": 270
+    },
+    {
+      "content": "# PAUSE HERE. Go to Exercise #2",
+      "position": [
+        840,
+        390
+      ],
+      "guid": "41fae449989c3fed1f583899d9043138",
+      "width": 270
+    },
+    {
+      "content": "# Star Wars API \n- [SWAPI Documentation](https://swapi.tech/documentation)\n",
+      "position": [
+        -255,
+        510
+      ],
+      "guid": "ec1c1da48cf7caefb42a656a6dfdb8ad",
+      "width": 180
+    },
+    {
+      "content": "# Exercise 2 - Choose another Star Wars API Endpoint to create two arrays in a Tines Resource so you can practice filtering data using different Tines Functions and the AI Automatic Mode",
+      "position": [
+        1200,
+        1035
+      ],
+      "guid": "c04c3dd71dc01022d1959fb664e52ee7",
+      "width": 270
+    }
+  ],
+  "links": [
+    {
+      "source": 23,
+      "receiver": 24
+    },
+    {
+      "source": 24,
+      "receiver": 25
+    },
+    {
+      "source": 25,
+      "receiver": 30
+    },
+    {
+      "source": 25,
+      "receiver": 28,
+      "link_type": "secondary"
+    },
+    {
+      "source": 26,
+      "receiver": 27
+    },
+    {
+      "source": 27,
+      "receiver": 25
+    },
+    {
+      "source": 28,
+      "receiver": 29
+    },
+    {
+      "source": 30,
+      "receiver": 26
+    }
+  ],
+  "diagram_layout": "{\"7ef0873c2f92bef35d21562934a91015\":[645,135],\"7c19945ecb28ef533a5bc4667030019a\":[645,825],\"0b0c7efdfd84d5e8e240e5f217feee80\":[1410,15],\"5dbbc9b92f84d598007b8606a870919a\":[450,240],\"8f89c6aefcaee28678d5225b12ea7c09\":[450,330],\"2c425065af98b4e17c2e18a2b7374e57\":[645,600],\"7a21c2e1877149f5968d71bcb1865e85\":[645,405],\"51195372891e979fc5e09950bca3c556\":[645,660],\"bd9173c186aa7f33d39a09782db679ec\":[645,735],\"9ae52fc60a391f2a72a4bd9e74921b0a\":[645,-60],\"b5365b5e476628e13bdade9c2ddbbbef\":[645,60],\"f6c2286dd7bde0aa60c42f08d321b898\":[855,225],\"1dd35f16acfa5aec0394c2f5733fc19c\":[855,315],\"2c2a7e6e839f2341276a269f0f2f88b7\":[645,0],\"fba75f51ef39cc8a9c00631fd7478107\":[1710,-150],\"7b4c6fa4004b63bd45628c7191967b11\":[1500,-75],\"6029a619655e7aecbe704cc276fe82c8\":[1830,-75],\"4c6648788dcbd9f73764d0d6fff30baa\":[1830,120],\"50f41891b84409dec4f67c7b59681f40\":[1500,120],\"8886016d9137a1aa2f52db6c781d4c8f\":[1695,15],\"43a7cb030b03b86787311ee13063e756\":[1965,15],\"8ed05524e88d732f6fe54d980bb3851c\":[645,465],\"44a1f206a3198c4607656536ea1ccdb9\":[645,525],\"cdefac148bde5bbe99a5efb51b1760f1\":[210,-255],\"2c20cf5c35929216aaab13bc539c4f3f\":[210,-180],\"94cf3c8c306b741ac0cf9fbc97c2122d\":[210,-105],\"564cad674a37efd1108b4d2cdee1b08c\":[210,30],\"7e38453f9bad664ffda90a17bcb30d79\":[210,90],\"2622dc32381e69886a7c946ac9c96537\":[420,-30],\"89a43833bb4f245dd8536c23fa409964\":[420,60],\"e18c8453ac8db737b582ff9fa90e6ef0\":[210,-30]}",
+  "send_to_story_enabled": false,
+  "entry_agent_guid": null,
+  "exit_agent_guids": [],
+  "api_entry_action_guids": [],
+  "api_exit_action_guids": [],
+  "keep_events_for": 86400,
+  "reporting_status": true,
+  "send_to_story_access": null,
+  "story_library_metadata": {},
+  "parent_only_send_to_story": false,
+  "monitor_failures": false,
+  "send_to_stories": [],
+  "synchronous_webhooks_enabled": true,
+  "send_to_story_access_source": 0,
+  "send_to_story_skill_use_requires_confirmation": true,
+  "pages": [],
+  "tags": [],
+  "time_saved_unit": "minutes",
+  "time_saved_value": 0,
+  "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+  "integration_product": null,
+  "integration_vendor": null,
+  "llm_product_instructions": "",
+  "exported_at": "2024-12-30T05:41:05Z",
+  "icon": ":trophy:",
+  "integrations": [
+    {
+      "action_inputs": [
+        {
+          "name": "Tenant domain",
+          "description": "The domain of the tenant.",
+          "required": true,
+          "type": "TEXT",
+          "ranking": 0,
+          "value": "\"<<META.tenant.domain>>\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Shared team names",
+          "description": "Comma separated list of teams' names where this resource can be used. Required to set 'read access' parameter to 'SPECIFIC_TEAMS'.",
+          "required": false,
+          "type": "TEXT",
+          "ranking": 1073741824,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Tines credential",
+          "description": "",
+          "required": false,
+          "type": "CREDENTIAL",
+          "ranking": 1610612736,
+          "value": "\"=CREDENTIAL.tines_resources\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Folder ID",
+          "description": "ID of the folder where the resource will be located. You can identify the folder ID within the URL of your Tines tenant on the tenant overview page by selecting an item within the folder.",
+          "required": false,
+          "type": "NUMBER",
+          "ranking": 1879048192,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Read access",
+          "description": "Control where this resource can be used. Defaults to 'team'. The 'specific teams' option is a premium feature that may not be available in your tenant and if used requires the additional parameter 'Shared team names'.",
+          "required": false,
+          "type": "OPTION",
+          "ranking": 2013265920,
+          "value": "\"\"",
+          "options": [
+            "TEAM",
+            "GLOBAL",
+            "SPECIFIC_TEAMS"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Description",
+          "description": "Description of the resource.",
+          "required": false,
+          "type": "TEXT",
+          "ranking": 2080374784,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Resource ID",
+          "description": "The ID of the resource you are querying for. You can identify this with the INFO key.",
+          "required": true,
+          "type": "NUMBER",
+          "ranking": 2113929216,
+          "value": "\"=INFO.resource.fast_ship_report.id\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Resource name",
+          "description": "Name of the resource.",
+          "required": false,
+          "type": "TEXT",
+          "ranking": 2130706432,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Test resource enabled?",
+          "description": "Select 'yes' if the resource is enabled for using a test resource.",
+          "required": false,
+          "type": "BOOLEAN",
+          "ranking": 2139095040,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Is test resource?",
+          "description": "Select 'yes' if the updated value should apply to the test resource rather than the live resource.",
+          "required": false,
+          "type": "BOOLEAN",
+          "ranking": 2143289344,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "JSON resource value",
+          "description": "The value of the resource. This can be an object with key/value pairs or an array of values. If you'd like to update a different part of the resource and keep the same value, just use a pill in formula mode referencing your resource.",
+          "required": true,
+          "type": "OBJECT",
+          "ranking": 2145386496,
+          "value": "[]",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        }
+      ],
+      "action_guid": "7c19945ecb28ef533a5bc4667030019a",
+      "product": "Tines",
+      "action_options_keys": []
+    },
+    {
+      "action_inputs": [
+        {
+          "name": "Tenant domain",
+          "description": "The domain of the tenant.",
+          "required": true,
+          "type": "TEXT",
+          "ranking": 0,
+          "value": "\"<<META.tenant.domain>>\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Tines credential",
+          "description": "",
+          "required": false,
+          "type": "CREDENTIAL",
+          "ranking": 1073741824,
+          "value": "\"=CREDENTIAL.tines_resources\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Resource ID",
+          "description": "The ID of the resource you are querying for. You can identify this with the INFO key.",
+          "required": false,
+          "type": "NUMBER",
+          "ranking": 1610612736,
+          "value": "\"=INFO.resource.fast_ship_report.id\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Is test resource?",
+          "description": "Select 'yes' to append an element to the test resource.",
+          "required": false,
+          "type": "BOOLEAN",
+          "ranking": 1879048192,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Text value",
+          "description": "The text to append to the resource. Use this input instead of the 'Array value' input if you are just appending text.",
+          "required": false,
+          "type": "TEXT",
+          "ranking": 2013265920,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Array value",
+          "description": "The array to append to the resource. Use this input instead of the 'Text value' input if you are appending an array.",
+          "required": false,
+          "type": "OBJECT",
+          "ranking": 2080374784,
+          "value": "\"=create_ship_object.ship_object\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        }
+      ],
+      "action_guid": "8f89c6aefcaee28678d5225b12ea7c09",
+      "product": "Tines",
+      "action_options_keys": []
+    },
+    {
+      "action_inputs": [
+        {
+          "name": "Tenant domain",
+          "description": "The domain of the tenant.",
+          "required": true,
+          "type": "TEXT",
+          "ranking": 0,
+          "value": "\"<<META.tenant.domain>>\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Shared team names",
+          "description": "Comma separated list of teams' names where this resource can be used. Required to set 'read access' parameter to 'SPECIFIC_TEAMS'.",
+          "required": false,
+          "type": "TEXT",
+          "ranking": 1073741824,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Tines credential",
+          "description": "",
+          "required": false,
+          "type": "CREDENTIAL",
+          "ranking": 1610612736,
+          "value": "\"=CREDENTIAL.tines_resources\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Folder ID",
+          "description": "ID of the folder where the resource will be located. You can identify the folder ID within the URL of your Tines tenant on the tenant overview page by selecting an item within the folder.",
+          "required": false,
+          "type": "NUMBER",
+          "ranking": 1879048192,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Read access",
+          "description": "Control where this resource can be used. Defaults to 'team'. The 'specific teams' option is a premium feature that may not be available in your tenant and if used requires the additional parameter 'Shared team names'.",
+          "required": false,
+          "type": "OPTION",
+          "ranking": 2013265920,
+          "value": "\"\"",
+          "options": [
+            "TEAM",
+            "GLOBAL",
+            "SPECIFIC_TEAMS"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Description",
+          "description": "Description of the resource.",
+          "required": false,
+          "type": "TEXT",
+          "ranking": 2080374784,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Resource ID",
+          "description": "The ID of the resource you are querying for. You can identify this with the INFO key.",
+          "required": true,
+          "type": "NUMBER",
+          "ranking": 2113929216,
+          "value": "\"=INFO.resource.slow_ship_report.id\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Resource name",
+          "description": "Name of the resource.",
+          "required": false,
+          "type": "TEXT",
+          "ranking": 2130706432,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Test resource enabled?",
+          "description": "Select 'yes' if the resource is enabled for using a test resource.",
+          "required": false,
+          "type": "BOOLEAN",
+          "ranking": 2139095040,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Is test resource?",
+          "description": "Select 'yes' if the updated value should apply to the test resource rather than the live resource.",
+          "required": false,
+          "type": "BOOLEAN",
+          "ranking": 2143289344,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "JSON resource value",
+          "description": "The value of the resource. This can be an object with key/value pairs or an array of values. If you'd like to update a different part of the resource and keep the same value, just use a pill in formula mode referencing your resource.",
+          "required": true,
+          "type": "OBJECT",
+          "ranking": 2145386496,
+          "value": "[]",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        }
+      ],
+      "action_guid": "bd9173c186aa7f33d39a09782db679ec",
+      "product": "Tines",
+      "action_options_keys": []
+    },
+    {
+      "action_inputs": [
+        {
+          "name": "Tenant domain",
+          "description": "The domain of the tenant.",
+          "required": true,
+          "type": "TEXT",
+          "ranking": 0,
+          "value": "\"<<META.tenant.domain>>\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Tines credential",
+          "description": "",
+          "required": false,
+          "type": "CREDENTIAL",
+          "ranking": 1073741824,
+          "value": "\"=CREDENTIAL.tines_resources\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Resource ID",
+          "description": "The ID of the resource you are querying for. You can identify this with the INFO key.",
+          "required": false,
+          "type": "NUMBER",
+          "ranking": 1610612736,
+          "value": "\"=INFO.resource.slow_ship_report.id\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Is test resource?",
+          "description": "Select 'yes' to append an element to the test resource.",
+          "required": false,
+          "type": "BOOLEAN",
+          "ranking": 1879048192,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Text value",
+          "description": "The text to append to the resource. Use this input instead of the 'Array value' input if you are just appending text.",
+          "required": false,
+          "type": "TEXT",
+          "ranking": 2013265920,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Array value",
+          "description": "The array to append to the resource. Use this input instead of the 'Text value' input if you are appending an array.",
+          "required": false,
+          "type": "OBJECT",
+          "ranking": 2080374784,
+          "value": "\"=create_ship_object.ship_object\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        }
+      ],
+      "action_guid": "1dd35f16acfa5aec0394c2f5733fc19c",
+      "product": "Tines",
+      "action_options_keys": []
+    }
+  ]
+}
