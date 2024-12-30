@@ -34,6 +34,7 @@ Tom
 
 - [How To Import a Tines Story](https://www.tines.com/docs/stories/importing-and-exporting/)
 - [How To Create a Tines Resource](https://www.tines.com/docs/resources/#creating-a-resource)
+- [Key Features Explained](https://explained.tines.com/en/collections/3866159-key-features-explained)
 - [Tines Documentation](https://www.tines.com/docs/quickstart/)
 - [Tines Tutorials](https://www.tines.com/customer-center/#tutorials)
 - [Tines Customer Center](https://www.tines.com/customer-center/)
