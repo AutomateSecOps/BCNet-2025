@@ -5,7 +5,7 @@ I will lead a technical workshop at [BCNet Connect 2025](https://www.bc.net/conn
 
 By the end of the workshop, you will know:
 
-1. How to query the [Star Wars API](https://swapi.tech/) and transform data to create a csv report.
+1. How to query the [Star Wars API](https://swapi.tech/).
 2. How to paginate and collect all the results in an HTTP Request action.
 3. How to create a Tines webform to submit Indicators of Compromise for enrichment.
 
