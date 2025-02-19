@@ -5,9 +5,9 @@ I will lead a technical workshop at [BCNet Connect 2025](https://www.bc.net/conn
 
 By the end of the workshop, you will know:
 
-1. How to query the [Star Wars API](https://swapi.tech/).
-2. How to paginate and collect all the results in an HTTP Request action.
-3. How to create a Tines webform to submit Indicators of Compromise for enrichment.
+1. How to use to the Tines User Interface.
+2. How to configure Tines Resources and Tines actions such Event Transformation and Trigger.
+3. How to create a Tines webform to submit Indicators of Compromise for enrichment using Tines Pages.
 
 **There is no prior technical, cybersecurity, or automation experience needed.**  
 
@@ -15,14 +15,15 @@ This workshop is not a lecture.
 
 It is hands-on keyboard, so bring your laptop!
 
-We will co-build throughout the entire workshop, so you will understand how to construct a Tines workflow from start to finish, using different actions such as the Event Transformation, the Send Email, and Trigger action. 
+We will co-build throughout the entire workshop, so you will understand how to construct a Tines workflow from start to finish.
 
 In addition, you will learn how to leverage Tines AI Automatic Mode for Event Transformations and the Tines AI action.
 
 ## Requirements
-- Sign up for the [FREE Tines Community Edition](https://www.tines.com/pricing/)
-- Sign up for a free personal [VirusTotal](https://www.virustotal.com/) and [URLScan.io](https://urlscan.io/) API key
-- Once signed into your Tines tenant, download and import the three Tines Stories under the [tines](https://github.com/AutomateSecOps/BCNet-2025/tree/main/tines) folder in this GitHub repo.
+- Sign up for the [FREE Tines Community Edition](https://www.tines.com/pricing/).
+- Sign up for a free personal [VirusTotal](https://www.virustotal.com/) and [URLScan.io](https://urlscan.io/) API key.
+- Once signed into your Tines tenant, download and import the Tines Story under the [tines](https://github.com/AutomateSecOps/BCNet-2025/tree/main/tines) folder in this GitHub repo.
+- Download the three csv files located in the [iocs](https://github.com/AutomateSecOps/BCNet-2025/tree/main/iocs)folder.
 
 Once you start automating, you can't stop!
 
