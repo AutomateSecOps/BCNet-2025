@@ -2,10 +2,10 @@
   "schema_version": 26,
   "standard_lib_version": 73,
   "action_runtime_version": 24,
-  "name": "Episode V - The IOC Strikes Back",
+  "name": "IOC Web Submission",
   "description": "Submit IPv4 IOCs for enrichment",
   "guid": "c7ab9dca268e2beb0e350df8150ed8e6",
-  "slug": "episode_v_the_ioc_strikes_back",
+  "slug": "ioc_web_submission",
   "agents": [
     {
       "type": "Agents::FormAgent",
@@ -30,7 +30,7 @@
         "pages_action_color": "#010101",
         "pages_appearance_mode": "dark",
         "pages_background_color": "#FDF3F3",
-        "url_identifier": "af792f8a3e2fd3409586c0608e711b1b",
+        "url_identifier": "360e51cdd56fcb6daa1e10d85433290d",
         "loading_message": "Please wait…",
         "auto_submit_time": null
       },
@@ -473,7 +473,7 @@
         "pages_action_color": "#777FFF",
         "pages_appearance_mode": "light",
         "pages_background_color": "#F9F9F9",
-        "url_identifier": "dddc82aae3aeb530ac985d9d29f6f29e",
+        "url_identifier": "e4c6e1464fc412760b7827836ba3e663",
         "redirect": "https://spring-water-5215.tines.com/pages/IOC-IP-Submission/",
         "auto_submit_time": "immediately"
       },
@@ -1588,7 +1588,7 @@
   "integration_product": null,
   "integration_vendor": null,
   "llm_product_instructions": "",
-  "exported_at": "2025-02-18T16:25:10Z",
+  "exported_at": "2025-02-19T00:53:42Z",
   "icon": ":hammer_and_pick:",
   "integrations": [
     {
