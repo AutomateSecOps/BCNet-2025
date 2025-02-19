@@ -30,7 +30,7 @@
         "pages_action_color": "#010101",
         "pages_appearance_mode": "dark",
         "pages_background_color": "#FDF3F3",
-        "url_identifier": "360e51cdd56fcb6daa1e10d85433290d",
+        "url_identifier": "2643ff4a701b954e1d80d0de837f6a3e",
         "loading_message": "Please wait…",
         "auto_submit_time": null
       },
@@ -349,37 +349,6 @@
       "schedule": null
     },
     {
-      "type": "Agents::SendToStoryAgent",
-      "name": "IOC Block-Remove Story",
-      "disabled": false,
-      "description": null,
-      "guid": "d337a029d8d8723a2fa5444077bb5cee",
-      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:c7ab9dca268e2beb0e350df8150ed8e6",
-      "options": {
-        "story": "<< STORY.episode_iv_a_new_hope_for_automation>>",
-        "payload": {
-          "ip": "<<explode_ips.ip>>",
-          "action": "block"
-        }
-      },
-      "reporting": {
-        "time_saved_value": 0,
-        "time_saved_unit": "minutes"
-      },
-      "monitoring": {
-        "monitor_all_events": false,
-        "monitor_failures": false,
-        "monitor_no_events_emitted": null
-      },
-      "template": {
-        "created_from_template_guid": null,
-        "created_from_template_version": null,
-        "template_tags": []
-      },
-      "width": null,
-      "schedule": null
-    },
-    {
       "type": "Agents::EventTransformationAgent",
       "name": "Convert Last Modification Date",
       "disabled": false,
@@ -473,7 +442,7 @@
         "pages_action_color": "#777FFF",
         "pages_appearance_mode": "light",
         "pages_background_color": "#F9F9F9",
-        "url_identifier": "e4c6e1464fc412760b7827836ba3e663",
+        "url_identifier": "680efa7e0f5d2edacc717071e755854a",
         "redirect": "https://spring-water-5215.tines.com/pages/IOC-IP-Submission/",
         "auto_submit_time": "immediately"
       },
@@ -815,37 +784,6 @@
       "schedule": null
     },
     {
-      "type": "Agents::SendToStoryAgent",
-      "name": "IOC Block-Remove Story",
-      "disabled": false,
-      "description": null,
-      "guid": "e26405d7edb318ca429e8e7b286727c8",
-      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:c7ab9dca268e2beb0e350df8150ed8e6",
-      "options": {
-        "story": "<< STORY.episode_iv_a_new_hope_for_automation>>",
-        "payload": {
-          "ip": "<<explode_ips.ip>>",
-          "action": "remove"
-        }
-      },
-      "reporting": {
-        "time_saved_value": 0,
-        "time_saved_unit": "minutes"
-      },
-      "monitoring": {
-        "monitor_all_events": false,
-        "monitor_failures": false,
-        "monitor_no_events_emitted": null
-      },
-      "template": {
-        "created_from_template_guid": null,
-        "created_from_template_version": null,
-        "template_tags": []
-      },
-      "width": null,
-      "schedule": null
-    },
-    {
       "type": "Agents::EventTransformationAgent",
       "name": "Explode IPs",
       "disabled": false,
@@ -968,37 +906,6 @@
       "schedule": null
     },
     {
-      "type": "Agents::SendToStoryAgent",
-      "name": "IOC Block-Remove Story",
-      "disabled": false,
-      "description": null,
-      "guid": "9c09c5dfcd8a68b4e42f05b601fdf31e",
-      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:c7ab9dca268e2beb0e350df8150ed8e6",
-      "options": {
-        "story": "<< STORY.episode_iv_a_new_hope_for_automation>>",
-        "payload": {
-          "ip": "<<explode_ips.ip>>",
-          "action": "remove"
-        }
-      },
-      "reporting": {
-        "time_saved_value": 0,
-        "time_saved_unit": "minutes"
-      },
-      "monitoring": {
-        "monitor_all_events": false,
-        "monitor_failures": false,
-        "monitor_no_events_emitted": null
-      },
-      "template": {
-        "created_from_template_guid": null,
-        "created_from_template_version": null,
-        "template_tags": []
-      },
-      "width": null,
-      "schedule": null
-    },
-    {
       "type": "Agents::HTTPRequestAgent",
       "name": "Remove element from a resource",
       "disabled": false,
@@ -1097,6 +1004,106 @@
         "template_tags": []
       },
       "width": null
+    },
+    {
+      "type": "Agents::HTTPRequestAgent",
+      "name": "Remove element from a resource",
+      "disabled": false,
+      "description": "Remove a top level element from an array or key from an object in a resource. The request returns the removed item. If the resource has a test value this can be modified by using the is_test parameter.\n\nLink to API documentation: https://www.tines.com/api/resources/remove-element",
+      "guid": "fc014060ecc5774236d10f9107c720a6",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:c7ab9dca268e2beb0e350df8150ed8e6",
+      "options": {
+        "url": "https://<<INPUT.tenant_domain>>/api/v1/global_resources/<<INPUT.resource_id>>/remove",
+        "method": "post",
+        "headers": {
+          "Authorization": "Bearer <<INPUT.tines_credential>>"
+        },
+        "content_type": "application_json",
+        "local": {
+          "all_parameters": {
+            "key": "=INPUT.key",
+            "index": "=INPUT.index",
+            "is_test": "=INPUT.is_test_resource"
+          },
+          "final_payload": "=REJECT(\n  LOCAL.all_parameters,\n  LAMBDA(\n    item,\n    OR(\n      item = NULL,\n      IF(\n        OR(\n          TYPE(item) = \"TrueClass\",\n          TYPE(item) = \"FalseClass\",\n          TYPE(item) = \"Integer\"\n        ),\n        IS_EMPTY(TEXT(item)),\n        IS_EMPTY(item)\n      )\n    )\n  )\n)"
+        },
+        "payload": "=LOCAL.final_payload"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": "fe7850ca94e4fe0672c498843ba254f6eb1499494b39fd2800cbfda6477bfe7c",
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Implode",
+      "disabled": false,
+      "description": null,
+      "guid": "9c589b85db36b845024e0cb146263235",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:c7ab9dca268e2beb0e350df8150ed8e6",
+      "options": {
+        "mode": "implode",
+        "item_path": "=explode_ips.ip",
+        "guid_path": "=explode_ips.guid",
+        "size_path": "=explode_ips.size"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Throttle",
+      "disabled": false,
+      "description": null,
+      "guid": "088ff81cd54c599f813f49a7765913aa",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:c7ab9dca268e2beb0e350df8150ed8e6",
+      "options": {
+        "mode": "throttle",
+        "interval": "minute",
+        "capacity": "30",
+        "events_per_run": 1
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null
     }
   ],
   "diagram_notes": [
@@ -1146,7 +1153,7 @@
       "width": 270
     },
     {
-      "content": "# Technical Resources\n- [Tines Pages](https://www.tines.com/docs/pages/)\n- [Tines Date Function](https://www.tines.com/docs/formulas/functions/date/)\n\n- [Tines Map Function](https://www.tines.com/docs/formulas/functions/map/)\n\n- [Tines CSV Parse To Objects Function](https://www.tines.com/docs/formulas/functions/csv-parse-to-objects/)\n\n- [Tines Base64_Decode Function](https://www.tines.com/docs/formulas/functions/base64-decode/)\n\n- [Tines Extract Mode](https://www.tines.com/docs/actions/types/event-transformation/extract/)\n\n- [Tines Explode Mode](https://www.tines.com/docs/actions/types/event-transformation/explode/)\n\n- [Tines Automatic Mode](https://www.tines.com/docs/actions/types/event-transformation/automatic/#example-configuration-options)\n\n- [Tines Send To Story Action](https://www.tines.com/docs/actions/types/send-to-story/)\n\n- [Tips for Automatic Mode](https://explained.tines.com/en/articles/9369122-tips-for-automatic-mode)\n\n- [Troubleshooting Tips in Pages & HTTP Request action](https://explained.tines.com/en/articles/9889226-example-approach-story-troubleshooting)\n\n- [Regex Editor](https://rubular.com/)",
+      "content": "# Technical Resources\n- [Tines Pages](https://www.tines.com/docs/pages/)\n- [Tines Date Function](https://www.tines.com/docs/formulas/functions/date/)\n\n- [Tines Map Function](https://www.tines.com/docs/formulas/functions/map/)\n\n- [Tines CSV Parse To Objects Function](https://www.tines.com/docs/formulas/functions/csv-parse-to-objects/)\n\n- [Tines Base64_Decode Function](https://www.tines.com/docs/formulas/functions/base64-decode/)\n\n- [Tines Extract Mode](https://www.tines.com/docs/actions/types/event-transformation/extract/)\n\n- [Tines Explode Mode](https://www.tines.com/docs/actions/types/event-transformation/explode/)\n\n- [Tines Automatic Mode](https://www.tines.com/docs/actions/types/event-transformation/automatic/#example-configuration-options)\n\n- [Tips for Automatic Mode](https://explained.tines.com/en/articles/9369122-tips-for-automatic-mode)\n\n- [Troubleshooting Tips in Pages & HTTP Request action](https://explained.tines.com/en/articles/9889226-example-approach-story-troubleshooting)\n\n- [Regex Editor](https://rubular.com/)",
       "position": [
         -120,
         135
@@ -1180,7 +1187,7 @@
     },
     {
       "source": 0,
-      "receiver": 13
+      "receiver": 12
     },
     {
       "source": 1,
@@ -1209,19 +1216,15 @@
     },
     {
       "source": 6,
-      "receiver": 11
-    },
-    {
-      "source": 6,
-      "receiver": 14
-    },
-    {
-      "source": 7,
       "receiver": 10
     },
     {
+      "source": 6,
+      "receiver": 13
+    },
+    {
       "source": 7,
-      "receiver": 21
+      "receiver": 20
     },
     {
       "source": 8,
@@ -1232,35 +1235,39 @@
       "receiver": 8
     },
     {
-      "source": 16,
-      "receiver": 15
+      "source": 15,
+      "receiver": 14
+    },
+    {
+      "source": 20,
+      "receiver": 19
     },
     {
       "source": 21,
-      "receiver": 20
+      "receiver": 22
     },
     {
       "source": 22,
-      "receiver": 24
-    },
-    {
-      "source": 23,
-      "receiver": 31
-    },
-    {
-      "source": 24,
-      "receiver": 23
-    },
-    {
-      "source": 25,
-      "receiver": 27
-    },
-    {
-      "source": 26,
       "receiver": 28
     },
     {
-      "source": 27,
+      "source": 23,
+      "receiver": 25
+    },
+    {
+      "source": 24,
+      "receiver": 31
+    },
+    {
+      "source": 25,
+      "receiver": 24
+    },
+    {
+      "source": 26,
+      "receiver": 27
+    },
+    {
+      "source": 28,
       "receiver": 26
     },
     {
@@ -1272,7 +1279,7 @@
       "receiver": 29
     }
   ],
-  "diagram_layout": "{\"020d4b8cceed45713c205da9feac1783\":[450,-195],\"5e23b9d6a3c747bc9d4c2bc2f5708f58\":[450,165],\"5a05cbd7cb273afe524e4e01f451757e\":[330,240],\"78ea80d7152301db4379ae88c66eca0f\":[585,240],\"58d6b736851c40f4c8736554728ea13f\":[-120,480],\"f87763ac857e0e2454d003f167f7860b\":[330,330],\"1348fa66f3dfa0892fc26529496c8cc3\":[450,480],\"47f3100b599674fd12cfdefc2ee565ee\":[450,585],\"15a1d0ea2f79420206e077792b20abe7\":[450,405],\"67c0a7cbfc4e778893e820c1c5afbd0f\":[585,330],\"d337a029d8d8723a2fa5444077bb5cee\":[225,690],\"e37b6dba48b4a84a48a98910aa626953\":[210,555],\"71c3bd8ea360570deeaf210943d774a9\":[-360,480],\"d385158d27cb5ba5f24c2e8d820b286a\":[780,75],\"026d8b43b5207906f3e053581b135776\":[630,555],\"06ff909fcef677e3e7731d8815f8920c\":[-360,765],\"cb00f78a3a194c50a88770ae8fbeaded\":[-360,705],\"e3a8311c24c4a937b9be0bd0357f370d\":[-360,540],\"288852359cdd1eac6ad5429623753d70\":[-120,540],\"e553037458d2e08dfaddd31311523e24\":[-120,600],\"ec580a14ba1ed274a52c4924a86163a1\":[450,780],\"401c553acd871e6f6ca0c104a33a1afb\":[450,690],\"ff3e14bcbec6ed9948e5c53af400bc35\":[1125,-150],\"e26405d7edb318ca429e8e7b286727c8\":[1125,15],\"057d6fd30b2118f1df5669d89d46c454\":[1125,-60],\"e676ec234f6ca55790020d035f1c6608\":[1410,-150],\"0d1db02216995e766e560ab81183a28d\":[1410,0],\"3007936219b4794a3fb9e9fc71905caf\":[1410,-75],\"9c09c5dfcd8a68b4e42f05b601fdf31e\":[1410,60],\"133ed74ef5f8f8804b61a2bf1cd7646a\":[1125,165],\"a608f57fc32b4a41d5ac79ca7fdec78f\":[1125,270],\"f9d71d2748e9ece23ee149d4fcbfc914\":[1125,90]}",
+  "diagram_layout": "{\"020d4b8cceed45713c205da9feac1783\":[450,-195],\"5e23b9d6a3c747bc9d4c2bc2f5708f58\":[450,165],\"5a05cbd7cb273afe524e4e01f451757e\":[330,240],\"78ea80d7152301db4379ae88c66eca0f\":[585,240],\"58d6b736851c40f4c8736554728ea13f\":[-120,480],\"f87763ac857e0e2454d003f167f7860b\":[330,330],\"1348fa66f3dfa0892fc26529496c8cc3\":[450,480],\"47f3100b599674fd12cfdefc2ee565ee\":[450,585],\"15a1d0ea2f79420206e077792b20abe7\":[450,405],\"67c0a7cbfc4e778893e820c1c5afbd0f\":[585,330],\"e37b6dba48b4a84a48a98910aa626953\":[210,555],\"71c3bd8ea360570deeaf210943d774a9\":[-360,480],\"d385158d27cb5ba5f24c2e8d820b286a\":[780,75],\"026d8b43b5207906f3e053581b135776\":[630,555],\"06ff909fcef677e3e7731d8815f8920c\":[-360,765],\"cb00f78a3a194c50a88770ae8fbeaded\":[-360,705],\"e3a8311c24c4a937b9be0bd0357f370d\":[-360,540],\"288852359cdd1eac6ad5429623753d70\":[-120,540],\"e553037458d2e08dfaddd31311523e24\":[-120,600],\"ec580a14ba1ed274a52c4924a86163a1\":[450,780],\"401c553acd871e6f6ca0c104a33a1afb\":[450,690],\"ff3e14bcbec6ed9948e5c53af400bc35\":[1125,-150],\"057d6fd30b2118f1df5669d89d46c454\":[1125,-60],\"e676ec234f6ca55790020d035f1c6608\":[1410,-150],\"0d1db02216995e766e560ab81183a28d\":[1410,0],\"3007936219b4794a3fb9e9fc71905caf\":[1410,-75],\"133ed74ef5f8f8804b61a2bf1cd7646a\":[1125,90],\"a608f57fc32b4a41d5ac79ca7fdec78f\":[1125,195],\"f9d71d2748e9ece23ee149d4fcbfc914\":[1125,15],\"fc014060ecc5774236d10f9107c720a6\":[1410,150],\"9c589b85db36b845024e0cb146263235\":[1410,225],\"088ff81cd54c599f813f49a7765913aa\":[1410,75]}",
   "send_to_story_enabled": false,
   "entry_agent_guid": null,
   "exit_agent_guids": [],
@@ -1588,7 +1595,7 @@
   "integration_product": null,
   "integration_vendor": null,
   "llm_product_instructions": "",
-  "exported_at": "2025-02-19T00:53:42Z",
+  "exported_at": "2025-02-19T00:58:44Z",
   "icon": ":hammer_and_pick:",
   "integrations": [
     {
@@ -1943,6 +1950,109 @@
         }
       ],
       "action_guid": "ec580a14ba1ed274a52c4924a86163a1",
+      "product": "Tines",
+      "action_options_keys": []
+    },
+    {
+      "action_inputs": [
+        {
+          "name": "Tenant domain",
+          "description": "The domain of the tenant.",
+          "required": true,
+          "type": "TEXT",
+          "ranking": 0,
+          "value": "\"<<META.tenant.domain>>\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Tines credential",
+          "description": "",
+          "required": false,
+          "type": "CREDENTIAL",
+          "ranking": 1073741824,
+          "value": "\"=CREDENTIAL.tines_resources\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Resource ID",
+          "description": "The ID of the resource you are querying for. You can identify this with the INFO key.",
+          "required": false,
+          "type": "NUMBER",
+          "ranking": 1610612736,
+          "value": "\"=INFO.resource.ip_sunset_list.id\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Index",
+          "description": "The index of the element to remove if removing from an array (with indexes starting at 0). You must use either the key or index parameter.",
+          "required": false,
+          "type": "NUMBER",
+          "ranking": 1879048192,
+          "value": "\"=INDEX_OF(RESOURCE.ip_sunset_list, LAMBDA(item, item.ip = explode_ips.ip))\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": false,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Is test resource?",
+          "description": "Select 'yes' to remove an element from the test resource.",
+          "required": false,
+          "type": "BOOLEAN",
+          "ranking": 2013265920,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        },
+        {
+          "name": "Key",
+          "description": "The object key to remove if removing from an object. You must use either the key or index parameter.",
+          "required": false,
+          "type": "TEXT",
+          "ranking": 2080374784,
+          "value": "\"\"",
+          "options": [
+            "Option 1",
+            "Option 2"
+          ],
+          "is_collapsed": true,
+          "sub_type": "HTML",
+          "multi_select_enabled": false,
+          "llm_json_schema": "{}"
+        }
+      ],
+      "action_guid": "fc014060ecc5774236d10f9107c720a6",
       "product": "Tines",
       "action_options_keys": []
     }
