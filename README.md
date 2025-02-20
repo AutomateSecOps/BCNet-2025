@@ -5,8 +5,8 @@ I will lead a technical workshop at [BCNet Connect 2025](https://www.bc.net/conn
 
 By the end of the workshop, you will know:
 
-1. How to use the Tines User Interface.
-2. How to configure Tines Resources and Tines actions such Event Transformation and Trigger.
+1. How to navigate the Tines User Interface.
+2. How to configure Tines Resources and Tines Actions such Event Transformation and Trigger.
 3. How to create a Tines webform to submit Indicators of Compromise for enrichment using Tines Pages.
 
 **There is no prior technical, cybersecurity, or automation experience needed.**  
