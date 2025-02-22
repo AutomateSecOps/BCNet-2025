@@ -30,7 +30,7 @@
         "pages_action_color": "#010101",
         "pages_appearance_mode": "dark",
         "pages_background_color": "#FDF3F3",
-        "url_identifier": "57cb17fe0bc6f3abc14d2078eea9a285",
+        "url_identifier": "07abd042438adf5550bde30d8c721d02",
         "loading_message": "Please wait…",
         "auto_submit_time": null
       },
@@ -443,7 +443,7 @@
         "pages_action_color": "#777FFF",
         "pages_appearance_mode": "light",
         "pages_background_color": "#F9F9F9",
-        "url_identifier": "248f5943adf3060fa4e4cda1de754fc3",
+        "url_identifier": "77f3b382afdbe83af2bd5f63eb40433e",
         "redirect": "https://spring-water-5215.tines.com/pages/IOC-IP-Submission/",
         "auto_submit_time": "immediately"
       },
@@ -1078,17 +1078,18 @@
     },
     {
       "type": "Agents::EventTransformationAgent",
-      "name": "Event Transform Action",
+      "name": "Convert Last Analysis Date with AI Automatic Mode",
       "disabled": false,
       "description": null,
       "guid": "673c3de96b8bc2f0e6225b9a206a57ab",
       "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:c7ab9dca268e2beb0e350df8150ed8e6",
       "options": {
-        "mode": "message_only",
-        "loop": false,
-        "payload": {
-          "message": "This is an automatically generated message from Tines"
-        }
+        "mode": "automatic",
+        "input": "=search_for_ip_address.body.data.attributes.last_analysis_date",
+        "guidance": "Convert Unix timestamp to PST in the format of YYYY-MM-DD.",
+        "language": "python",
+        "script": "import datetime\nimport pytz\n\ndef main(input: int) -> str:\n    pst = pytz.timezone('US/Pacific')\n    timestamp = datetime.datetime.fromtimestamp(input, tz=pst)\n    return timestamp.strftime('%Y-%m-%d')",
+        "requirements": "pytz"
       },
       "reporting": {
         "time_saved_value": 0,
@@ -1688,7 +1689,7 @@
   "integration_product": null,
   "integration_vendor": null,
   "llm_product_instructions": "",
-  "exported_at": "2025-02-22T21:26:16Z",
+  "exported_at": "2025-02-22T21:53:06Z",
   "icon": ":hammer_and_pick:",
   "integrations": [
     {
