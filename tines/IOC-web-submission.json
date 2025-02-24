@@ -30,7 +30,7 @@
         "pages_action_color": "#010101",
         "pages_appearance_mode": "dark",
         "pages_background_color": "#FDF3F3",
-        "url_identifier": "07abd042438adf5550bde30d8c721d02",
+        "url_identifier": "ecd21447c9a4ff5bd9a1748d8d0bc0cc",
         "loading_message": "Please wait…",
         "auto_submit_time": null
       },
@@ -443,7 +443,7 @@
         "pages_action_color": "#777FFF",
         "pages_appearance_mode": "light",
         "pages_background_color": "#F9F9F9",
-        "url_identifier": "77f3b382afdbe83af2bd5f63eb40433e",
+        "url_identifier": "94909b3a50e672f37ee0920a675814c1",
         "redirect": "https://spring-water-5215.tines.com/pages/IOC-IP-Submission/",
         "auto_submit_time": "immediately"
       },
@@ -704,7 +704,7 @@
         "mode": "automatic",
         "input": "=RESOURCE.ip_sunset_list",
         "guidance": "Extract IPs older than 21 days.",
-        "language": "Python",
+        "language": "python",
         "script": "from datetime import datetime, timedelta\n\ndef main(input):\n    today = datetime.now()\n    cutoff_date = today - timedelta(days=21)\n    \n    old_ips = []\n    for item in input:\n        ip = item.get('ip')\n        date_str = item.get('date')\n        date = datetime.strptime(date_str, '%Y-%m-%d')\n        if date < cutoff_date:\n            old_ips.append(ip)\n    \n    return old_ips"
       },
       "reporting": {
@@ -1193,7 +1193,7 @@
       "content": "Helpful Regex for checking the validity of domain, ipv4, sha256, and email IOCs",
       "position": [
         -120,
-        405
+        450
       ],
       "guid": "573f7bd7eb5ca56ea909e82964581f11",
       "width": 270
@@ -1202,7 +1202,7 @@
       "content": "# Exercise 2 - Build your own Tines webform for IOC submission",
       "position": [
         195,
-        1095
+        1200
       ],
       "guid": "c5a574fd169293596a63db2e43d6cb6a",
       "width": 270
@@ -1226,7 +1226,7 @@
       "width": 270
     },
     {
-      "content": "# Technical Resources\n- [Tines Pages](https://www.tines.com/docs/pages/)\n\n- [Tines Date Function](https://www.tines.com/docs/formulas/functions/date/)\n\n- [Tines Map Function](https://www.tines.com/docs/formulas/functions/map/)\n\n- [Tines CSV Parse To Objects Function](https://www.tines.com/docs/formulas/functions/csv-parse-to-objects/)\n\n- [Tines Base64_Decode Function](https://www.tines.com/docs/formulas/functions/base64-decode/)\n\n- [Tines Extract Mode](https://www.tines.com/docs/actions/types/event-transformation/extract/)\n\n- [Tines Explode Mode](https://www.tines.com/docs/actions/types/event-transformation/explode/)\n\n- [Tines Automatic Mode](https://www.tines.com/docs/actions/types/event-transformation/automatic/#example-configuration-options)\n\n- [Tips for Automatic Mode](https://explained.tines.com/en/articles/9369122-tips-for-automatic-mode)\n\n- [Troubleshooting Tips in Pages & HTTP Request action](https://explained.tines.com/en/articles/9889226-example-approach-story-troubleshooting)\n\n- [Tines Today Function](https://www.tines.com/docs/formulas/functions/today/)\n\n- [Regex Editor](https://rubular.com/)",
+      "content": "# Technical Resources\n- [Tines Pages](https://www.tines.com/docs/pages/)\n\n- [Tines Filter Function](https://www.tines.com/docs/formulas/functions/filter/)\n\n- [Tines Lambda Function](https://www.tines.com/docs/formulas/functions/lambda/)\n\n- [Tines Date Function](https://www.tines.com/docs/formulas/functions/date/)\n\n- [Tines Map Function](https://www.tines.com/docs/formulas/functions/map/)\n\n- [Tines CSV Parse To Objects Function](https://www.tines.com/docs/formulas/functions/csv-parse-to-objects/)\n\n- [Tines Base64_Decode Function](https://www.tines.com/docs/formulas/functions/base64-decode/)\n\n- [Tines Extract Mode](https://www.tines.com/docs/actions/types/event-transformation/extract/)\n\n- [Tines Explode Mode](https://www.tines.com/docs/actions/types/event-transformation/explode/)\n\n- [Tines Automatic Mode](https://www.tines.com/docs/actions/types/event-transformation/automatic/#example-configuration-options)\n\n- [Tips for Automatic Mode](https://explained.tines.com/en/articles/9369122-tips-for-automatic-mode)\n\n- [Troubleshooting Tips in Pages & HTTP Request action](https://explained.tines.com/en/articles/9889226-example-approach-story-troubleshooting)\n\n- [Tines Today Function](https://www.tines.com/docs/formulas/functions/today/)\n\n- [Regex Editor](https://rubular.com/)",
       "position": [
         -120,
         135
@@ -1246,7 +1246,7 @@
     {
       "content": "# IOC Sunsetting:  AI Automatic Mode vs Filter",
       "position": [
-        1140,
+        1110,
         -240
       ],
       "guid": "0b243b2862d5ad5132c1d3033a0c43e3",
@@ -1373,7 +1373,7 @@
       "receiver": 32
     }
   ],
-  "diagram_layout": "{\"020d4b8cceed45713c205da9feac1783\":[450,-195],\"5e23b9d6a3c747bc9d4c2bc2f5708f58\":[450,165],\"5a05cbd7cb273afe524e4e01f451757e\":[330,240],\"78ea80d7152301db4379ae88c66eca0f\":[585,240],\"58d6b736851c40f4c8736554728ea13f\":[-120,480],\"f87763ac857e0e2454d003f167f7860b\":[330,330],\"1348fa66f3dfa0892fc26529496c8cc3\":[450,480],\"47f3100b599674fd12cfdefc2ee565ee\":[450,585],\"15a1d0ea2f79420206e077792b20abe7\":[450,405],\"67c0a7cbfc4e778893e820c1c5afbd0f\":[585,330],\"e37b6dba48b4a84a48a98910aa626953\":[210,555],\"71c3bd8ea360570deeaf210943d774a9\":[-360,480],\"d385158d27cb5ba5f24c2e8d820b286a\":[780,75],\"026d8b43b5207906f3e053581b135776\":[630,555],\"06ff909fcef677e3e7731d8815f8920c\":[-360,765],\"cb00f78a3a194c50a88770ae8fbeaded\":[-360,705],\"e3a8311c24c4a937b9be0bd0357f370d\":[-360,540],\"ec580a14ba1ed274a52c4924a86163a1\":[450,765],\"401c553acd871e6f6ca0c104a33a1afb\":[450,690],\"ff3e14bcbec6ed9948e5c53af400bc35\":[1125,-150],\"057d6fd30b2118f1df5669d89d46c454\":[1125,-60],\"e676ec234f6ca55790020d035f1c6608\":[1410,-150],\"0d1db02216995e766e560ab81183a28d\":[1410,0],\"3007936219b4794a3fb9e9fc71905caf\":[1410,-75],\"133ed74ef5f8f8804b61a2bf1cd7646a\":[1125,90],\"a608f57fc32b4a41d5ac79ca7fdec78f\":[1125,195],\"f9d71d2748e9ece23ee149d4fcbfc914\":[1125,15],\"fc014060ecc5774236d10f9107c720a6\":[1410,150],\"9c589b85db36b845024e0cb146263235\":[1410,225],\"088ff81cd54c599f813f49a7765913aa\":[1410,75],\"41858f43f26b75df77e2c00af076d4e0\":[450,855],\"673c3de96b8bc2f0e6225b9a206a57ab\":[885,555],\"321fb97bcdc525bcebf3495632ee3ae5\":[450,990],\"4be852bd0b5c54a1d48ce02bf85dbff8\":[450,930]}",
+  "diagram_layout": "{\"020d4b8cceed45713c205da9feac1783\":[450,-195],\"5e23b9d6a3c747bc9d4c2bc2f5708f58\":[450,165],\"5a05cbd7cb273afe524e4e01f451757e\":[330,240],\"78ea80d7152301db4379ae88c66eca0f\":[585,240],\"58d6b736851c40f4c8736554728ea13f\":[-120,525],\"f87763ac857e0e2454d003f167f7860b\":[330,330],\"1348fa66f3dfa0892fc26529496c8cc3\":[450,480],\"47f3100b599674fd12cfdefc2ee565ee\":[450,585],\"15a1d0ea2f79420206e077792b20abe7\":[450,405],\"67c0a7cbfc4e778893e820c1c5afbd0f\":[585,330],\"e37b6dba48b4a84a48a98910aa626953\":[210,555],\"71c3bd8ea360570deeaf210943d774a9\":[-360,480],\"d385158d27cb5ba5f24c2e8d820b286a\":[780,75],\"026d8b43b5207906f3e053581b135776\":[630,555],\"06ff909fcef677e3e7731d8815f8920c\":[-360,765],\"cb00f78a3a194c50a88770ae8fbeaded\":[-360,705],\"e3a8311c24c4a937b9be0bd0357f370d\":[-360,540],\"ec580a14ba1ed274a52c4924a86163a1\":[450,765],\"401c553acd871e6f6ca0c104a33a1afb\":[450,690],\"ff3e14bcbec6ed9948e5c53af400bc35\":[1110,-150],\"057d6fd30b2118f1df5669d89d46c454\":[1110,-60],\"e676ec234f6ca55790020d035f1c6608\":[1395,-150],\"0d1db02216995e766e560ab81183a28d\":[1395,0],\"3007936219b4794a3fb9e9fc71905caf\":[1395,-75],\"133ed74ef5f8f8804b61a2bf1cd7646a\":[1110,90],\"a608f57fc32b4a41d5ac79ca7fdec78f\":[1110,195],\"f9d71d2748e9ece23ee149d4fcbfc914\":[1110,15],\"fc014060ecc5774236d10f9107c720a6\":[1395,150],\"9c589b85db36b845024e0cb146263235\":[1395,225],\"088ff81cd54c599f813f49a7765913aa\":[1395,75],\"41858f43f26b75df77e2c00af076d4e0\":[450,855],\"673c3de96b8bc2f0e6225b9a206a57ab\":[885,555],\"321fb97bcdc525bcebf3495632ee3ae5\":[450,990],\"4be852bd0b5c54a1d48ce02bf85dbff8\":[450,930]}",
   "send_to_story_enabled": false,
   "entry_agent_guid": null,
   "exit_agent_guids": [],
@@ -1689,7 +1689,7 @@
   "integration_product": null,
   "integration_vendor": null,
   "llm_product_instructions": "",
-  "exported_at": "2025-02-22T21:53:06Z",
+  "exported_at": "2025-02-24T05:01:26Z",
   "icon": ":hammer_and_pick:",
   "integrations": [
     {
