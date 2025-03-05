@@ -1,0 +1,201 @@
+{
+  "schema_version": 26,
+  "standard_lib_version": 74,
+  "action_runtime_version": 29,
+  "name": "Webhook-SendToStory",
+  "description": null,
+  "guid": "ca4cb50c57303033bf98fca4b0bbc426",
+  "slug": "webhook_sendtostory",
+  "agents": [
+    {
+      "type": "Agents::WebhookAgent",
+      "name": "Webhook Action",
+      "disabled": false,
+      "description": null,
+      "guid": "39b56b2deb4b6f30aba6c0c2611c752d",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "path": "8ff8796b72110806c055e93c1df909da",
+        "secret": "e4870fab2c9b036ab0a9ab60f48daa01",
+        "verbs": "get,post",
+        "response": "IOC received!"
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "Exit",
+      "disabled": false,
+      "description": null,
+      "guid": "93215568d626cc8db6b2dd4e42121704",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "message": "IOC received!"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::TriggerAgent",
+      "name": "Block or Remove?",
+      "disabled": false,
+      "description": null,
+      "guid": "aa3ca343033fa8883b8f284dab4dc143",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "rules": [
+          {
+            "path": "=webhook_action.body.action",
+            "type": "in",
+            "value": "block"
+          }
+        ]
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "IOC Removal Pipeline",
+      "disabled": false,
+      "description": null,
+      "guid": "411b2dc4e7c2c545684c1ba9dfe5ae74",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:efabe1c152f0445f920b8e6e3c3d0118",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "message": "This IOC, <<webhook_action.body.ioc>>, has been sunsetted!"
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    },
+    {
+      "type": "Agents::EventTransformationAgent",
+      "name": "IOC Blocking Pipeline",
+      "disabled": false,
+      "description": null,
+      "guid": "baac2e4ef3091b44389134c38043b10a",
+      "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:72e7a5fc112670fa24d84ded90f8768c",
+      "options": {
+        "mode": "message_only",
+        "loop": false,
+        "payload": {
+          "message": "This IOC, <<webhook_action.body.ioc>>, has been blocked."
+        }
+      },
+      "reporting": {
+        "time_saved_value": 0,
+        "time_saved_unit": "minutes"
+      },
+      "monitoring": {
+        "monitor_all_events": false,
+        "monitor_failures": false,
+        "monitor_no_events_emitted": null
+      },
+      "template": {
+        "created_from_template_guid": null,
+        "created_from_template_version": null,
+        "template_tags": []
+      },
+      "width": null,
+      "schedule": null
+    }
+  ],
+  "diagram_notes": [],
+  "links": [],
+  "diagram_layout": "{\"39b56b2deb4b6f30aba6c0c2611c752d\":[525,195],\"93215568d626cc8db6b2dd4e42121704\":[525,480],\"aa3ca343033fa8883b8f284dab4dc143\":[525,270],\"411b2dc4e7c2c545684c1ba9dfe5ae74\":[705,360],\"baac2e4ef3091b44389134c38043b10a\":[375,375]}",
+  "send_to_story_enabled": false,
+  "entry_agent_guid": null,
+  "exit_agent_guids": [],
+  "api_entry_action_guids": [
+    "39b56b2deb4b6f30aba6c0c2611c752d"
+  ],
+  "api_exit_action_guids": [
+    "93215568d626cc8db6b2dd4e42121704"
+  ],
+  "keep_events_for": 86400,
+  "reporting_status": true,
+  "send_to_story_access": null,
+  "story_library_metadata": {},
+  "parent_only_send_to_story": false,
+  "monitor_failures": false,
+  "send_to_stories": [],
+  "recipients": [
+    "thomasedwardpower@gmail.com"
+  ],
+  "synchronous_webhooks_enabled": true,
+  "send_to_story_access_source": 0,
+  "send_to_story_skill_use_requires_confirmation": true,
+  "pages": [],
+  "tags": [],
+  "time_saved_unit": "minutes",
+  "time_saved_value": 0,
+  "origin_story_identifier": "cloud:0babdfaca84c3865dc5749e64fde82f5:ca4cb50c57303033bf98fca4b0bbc426",
+  "integration_product": null,
+  "integration_vendor": null,
+  "llm_product_instructions": "",
+  "exported_at": "2025-03-05T03:26:46Z",
+  "icon": ":art:",
+  "integrations": []
+}
