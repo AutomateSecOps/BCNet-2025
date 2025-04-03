@@ -1,7 +1,7 @@
 # BCNet Tines Technical Workshop 2025
 ## Instructions and workflows for the BCNet Tines Technical Workshop 
 
-I will lead a technical workshop at [BCNet Connect 2025](https://www.bc.net/connect), where you can gain hands-on experience with the [Tines automation platform](https://www.tines.com).
+I will lead a technical workshop at [BCNet Connect 2025]9https://www.bc.net/connect/themes/workshops/hands-tines-technical-training-workshop), where you can gain hands-on experience with the [Tines automation platform](https://www.tines.com).
 
 By the end of the workshop, you will know:
 
